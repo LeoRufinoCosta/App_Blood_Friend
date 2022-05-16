@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.core.widget.NestedScrollView xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/sangue"
+        tools:context=".Inicial">
+
+        <ImageView
+            android:id="@+id/logo_principal"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginTop="90dp"
+            android:src="@drawable/logo"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/marca_dagua"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:layout_marginTop="380dp"
+            android:alpha="0.35"
+            android:src="@drawable/sangue"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.3"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            />
+
+        <TextView
+            android:id="@+id/text_app"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:text="@string/blood_friend"
+            android:textColor="@color/white"
+            android:textSize="40dp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/logo_principal" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/bt_entrar"
+            style="@style/Button"
+            android:layout_marginStart="80dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginEnd="80dp"
+            android:text="@string/entrar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_app" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/bt_cadastrar"
+            style="@style/Button2"
+            android:layout_marginStart="80dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="80dp"
+            android:text="@string/cadastrar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/bt_entrar" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/bt_google"
+            style="@style/Button"
+            android:layout_marginStart="80dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="80dp"
+            android:drawableLeft="@mipmap/ic_google"
+            android:text="@string/logar_google"
+            android:padding="4dp"
+            android:textColor="@color/azul_google"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/bt_cadastrar" />
+
+        <TextView
+            android:id="@+id/text_ajuda"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/ajuda"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/bt_google"
+            tools:layout_editor_absoluteX="117dp" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>
