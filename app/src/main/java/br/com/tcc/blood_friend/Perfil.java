@@ -1,14 +1,18 @@
 package br.com.tcc.blood_friend;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -26,7 +30,33 @@ public class Perfil extends AppCompatActivity {
     private Button bt_sair;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     String usuarioID;
-    String Usuario;
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        getMenuInflater().inflate(R.menu.menu, menu);
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        switch (item.getItemId()){
+            case R.id.menu_sair:
+                FirebaseAuth.getInstance().signOut();
+                VerificarAuth();
+                //Intent intent = new Intent(Principal.this, Inicial.class);
+                //startActivity(intent);
+
+                break;
+
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+
 
 
     @Override
@@ -34,7 +64,7 @@ public class Perfil extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_perfil);
 
-        getSupportActionBar().hide();
+        //getSupportActionBar().hide();
         IniciarComponentes();
         VerificarAuth();
 
@@ -42,7 +72,7 @@ public class Perfil extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 FirebaseAuth.getInstance().signOut();
-                //VerificarAuth();
+                VerificarAuth();
             }
         });
 
@@ -72,9 +102,9 @@ public class Perfil extends AppCompatActivity {
                     nomeUser.setText(documentSnapshot.getString("Nome"));
                     email.setText(emailUser);
                     idade.setText(documentSnapshot.getString("Idade"));
-                    sexo.setText(documentSnapshot.getString("Gênero"));
-                    loc.setText(documentSnapshot.getString("Localização"));
-                    tipo_sangue.setText(documentSnapshot.getString("Tipo Sanguíneo"));
+                    sexo.setText(documentSnapshot.getString("Genero"));
+                    loc.setText(documentSnapshot.getString("Localizacao"));
+                    tipo_sangue.setText(documentSnapshot.getString("TipoSanguineo"));
 
 
                 }

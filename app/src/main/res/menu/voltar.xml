@@ -2,13 +2,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-
     <item
-        android:id="@+id/menu_sair"
-        android:icon="@drawable/ic_sair"
+        android:id="@+id/menu_voltar"
+        android:icon="@drawable/ic_voltar"
         app:showAsAction="always"
-        android:title="Sair" />
-
-        />
+        android:title="Voltar" />
+    />
 
 </menu>

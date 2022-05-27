@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/sangue"
-        tools:context=".Cadastrar">
+        tools:context=".CadastroReceptor">
 
         <ImageView
             android:layout_width="300dp"
@@ -69,18 +69,6 @@
             app:layout_constraintTop_toTopOf="@+id/edit_idade" />
 
         <Spinner
-            android:id="@+id/edit_localizacao"
-            style="@style/spinner_full"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="8dp"
-            android:background="@drawable/spinner"
-            android:entries="@array/localizacao"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/edit_tipo_sangue" />
-
-        <Spinner
             android:id="@+id/edit_sexo"
             style="@style/spinner_full"
             android:layout_marginStart="8dp"
@@ -90,7 +78,7 @@
             android:entries="@array/generos"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/edit_localizacao" />
+            app:layout_constraintTop_toBottomOf="@id/edit_tipo_sangue" />
 
         <EditText
             android:id="@+id/edit_email"
@@ -105,6 +93,22 @@
             app:layout_constraintTop_toBottomOf="@id/edit_sexo" />
 
         <EditText
+            android:id="@+id/edit_bio"
+            style="@style/edit_text_full"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="8dp"
+            android:gravity="start"
+            android:hint="EXPLIQUE O MOTIVO DA SUA NECESSIDADE..."
+            android:inputType="textMultiLine"
+            android:maxLength="800"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/edit_email" />
+
+        <EditText
             android:id="@+id/edit_senha"
             style="@style/edit_text_full"
             android:layout_marginStart="8dp"
@@ -114,7 +118,7 @@
             android:inputType="numberPassword"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/edit_email" />
+            app:layout_constraintTop_toBottomOf="@id/edit_bio" />
 
         <EditText
             android:id="@+id/edit_confirmar_senha"
@@ -162,7 +166,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:gravity="center"
-            android:text="@string/doador"
+            android:text="@string/receptor"
             android:textColor="@color/white"
             android:textSize="40sp"
             android:textStyle="bold"

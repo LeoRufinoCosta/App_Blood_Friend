@@ -16,12 +16,23 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class Inicial extends AppCompatActivity {
 
@@ -30,6 +41,7 @@ public class Inicial extends AppCompatActivity {
     GoogleSignInOptions gso;
     GoogleSignInClient gsc;
     Button bt_google;
+    String usuarioID;
 
 
     @Override
@@ -62,14 +74,14 @@ public class Inicial extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(Inicial.this, Cadastrar.class);
+                Intent intent = new Intent(Inicial.this, CadastroEtapa01.class);
                 startActivity(intent);
             }
         });
 
         bt_google.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View v) {
                 signIn();
 
             }
@@ -81,6 +93,7 @@ public class Inicial extends AppCompatActivity {
         super.onStart();
         FirebaseUser usuarioAtual = FirebaseAuth.getInstance().getCurrentUser();
         if(usuarioAtual != null){
+            Log.d("Usuario", usuarioAtual.getUid());
             Intent intent = new Intent(Inicial.this, Principal.class);
             startActivity(intent);
             finish();
@@ -99,10 +112,7 @@ public class Inicial extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
-                    Toast.makeText(getApplicationContext(), "Login com Google efetuado com sucesso!", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(Inicial.this,Inicial.class);
-                    startActivity(intent);
-                    finish();
+                    SalvarDadosUsuario();
                 } else{
                     Toast.makeText(getApplicationContext(), "Erro ao logar com Google!", Toast.LENGTH_SHORT).show();
 
@@ -129,6 +139,68 @@ public class Inicial extends AppCompatActivity {
             }
         }
 
+    }
+
+    private void SalvarDadosUsuario(){
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        CollectionReference usuarioGoogle = db.collection("Usuario");
+        String emailUser = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+        String nulo = "";
+        usuarioID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+        Map<String,Object> usuarios = new HashMap<>();
+        usuarios.put("Nome", "");
+        usuarios.put("Idade", "");
+        usuarios.put("Email", emailUser);
+        usuarios.put("TipoSanguineo", "");
+        usuarios.put("Genero", "");
+        usuarios.put("Localizacao", "");
+
+        db.collection("Usuario").document(usuarioID).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot document) {
+                if(document.exists()){
+                    usuarioGoogle.whereEqualTo("Nome", nulo).whereEqualTo("Email", emailUser).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if(task.isSuccessful()){
+                                for (QueryDocumentSnapshot document : task.getResult()){
+                                    if(document.getId().equals(usuarioID)){
+                                        Toast.makeText(getApplicationContext(), "Login com Google efetuado com sucesso!", Toast.LENGTH_SHORT).show();
+                                        Intent intent = new Intent(Inicial.this,CadastroGoogle.class);
+                                        startActivity(intent);
+                                    }else{
+                                        Toast.makeText(getApplicationContext(), "Login com Google efetuado com sucesso!", Toast.LENGTH_SHORT).show();
+                                        Intent intent = new Intent(Inicial.this,Principal.class);
+                                        startActivity(intent);
+                                    }
+                                    Log.d("Consulta", document.getId() + "-->" + document.getData());
+                                }
+
+                            }
+                        }
+                    });
+                }else{
+                    DocumentReference documentReference = db.collection("Usuario").document(usuarioID);
+                    documentReference.set(usuarios).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void unused) {
+                            Log.d("db","Sucesso ao salvar os dados");
+                            Toast.makeText(getApplicationContext(), "Login com Google efetuado com sucesso!", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(Inicial.this,CadastroGoogle.class);
+                            startActivity(intent);
+
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.d("db_error", "Erro ao salvar os dados"+ e.toString());
+                        }
+                    });
+                }
+            }
+        });
     }
 
     private void IniciarComponentes(){

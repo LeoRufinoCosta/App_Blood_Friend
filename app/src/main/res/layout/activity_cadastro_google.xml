@@ -30,43 +30,55 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
+        <TextView
+            android:id="@+id/text_app"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:text="CADASTRO GOOGLE"
+            android:textColor="@color/white"
+            android:textSize="35sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <EditText
             android:id="@+id/edit_user"
             style="@style/edit_text_full"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="12dp"
             android:layout_marginEnd="8dp"
             android:hint="NOME E SOBRENOME"
             android:inputType="textCapWords|textPersonName"
             android:maxLength="30"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView2" />
+            app:layout_constraintTop_toBottomOf="@+id/text_app" />
 
         <EditText
             android:id="@+id/edit_idade"
-            style="@style/edit_text_bg"
-            android:layout_width="85dp"
-            android:layout_height="0dp"
+            style="@style/edit_text_full"
             android:layout_marginStart="8dp"
             android:layout_marginTop="10dp"
+            android:layout_marginEnd="8dp"
             android:hint="IDADE"
             android:inputType="number"
             android:maxLength="2"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/edit_user" />
 
         <Spinner
             android:id="@+id/edit_tipo_sangue"
             style="@style/spinner_full"
-            android:layout_width="0dp"
             android:layout_marginStart="8dp"
+            android:layout_marginTop="10dp"
             android:layout_marginEnd="8dp"
             android:background="@drawable/spinner"
             android:entries="@array/tipo_sanguineo"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/edit_idade"
-            app:layout_constraintTop_toTopOf="@+id/edit_idade" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/edit_idade" />
 
         <Spinner
             android:id="@+id/edit_localizacao"
@@ -92,42 +104,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/edit_localizacao" />
 
-        <EditText
-            android:id="@+id/edit_email"
-            style="@style/edit_text_full"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="8dp"
-            android:hint="E-MAIL"
-            android:inputType="textEmailAddress"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/edit_sexo" />
-
-        <EditText
-            android:id="@+id/edit_senha"
-            style="@style/edit_text_full"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="8dp"
-            android:hint="SENHA"
-            android:inputType="numberPassword"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/edit_email" />
-
-        <EditText
-            android:id="@+id/edit_confirmar_senha"
-            style="@style/edit_text_full"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="8dp"
-            android:hint="CONFIRMAR SENHA"
-            android:inputType="numberPassword"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/edit_senha" />
-
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/bt_cadastrado"
@@ -137,11 +113,10 @@
             android:layout_marginEnd="32dp"
             android:layout_marginBottom="50dp"
             android:text="@string/cadastrar"
-            android:textSize="@dimen/browser_actions_context_menu_min_padding"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/edit_confirmar_senha" />
+            app:layout_constraintTop_toBottomOf="@+id/edit_sexo" />
 
         <ProgressBar
             android:id="@+id/progressbar"
@@ -154,20 +129,9 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/edit_confirmar_senha" />
+            app:layout_constraintTop_toBottomOf="@id/edit_sexo" />
 
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:gravity="center"
-            android:text="@string/doador"
-            android:textColor="@color/white"
-            android:textSize="40sp"
-            android:textStyle="bold"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:layout_editor_absoluteX="126dp" />
+
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

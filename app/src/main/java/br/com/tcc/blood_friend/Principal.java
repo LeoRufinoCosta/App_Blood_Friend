@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,11 +16,18 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -34,12 +42,21 @@ import org.w3c.dom.Text;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Principal extends AppCompatActivity {
+public class Principal extends AppCompatActivity implements MyAdapter.OnUserListener{
 
     RecyclerView recyclerView;
     ArrayList<User> userArrayList;
     MyAdapter myAdapter;
     FirebaseFirestore db;
+
+    BottomNavigationView bt_nav;
+    HomeFragment homeFragment = new HomeFragment();
+    PerfilFragment perfilFragment = new PerfilFragment();
+
+    private Spinner busca_loc, busca_sangue;
+    private ImageView img_buscar;
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -53,11 +70,11 @@ public class Principal extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
         switch (item.getItemId()){
-            case R.id.menu_voltar:
+            case R.id.menu_sair:
                 FirebaseAuth.getInstance().signOut();
                 VerificarAuth();
-                //Intent intent = new Intent(Principal.this, Inicial.class);
-                //startActivity(intent);
+                Intent intent = new Intent(Principal.this, Inicial.class);
+                startActivity(intent);
 
                 break;
 
@@ -71,22 +88,73 @@ public class Principal extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_principal);
-
         //getSupportActionBar().hide();
         VerificarAuth();
 
+        img_buscar = findViewById(R.id.img_buscar);
+        busca_loc = findViewById(R.id.busca_loc);
+        busca_sangue = findViewById(R.id.busca_sangue);
+
+        img_buscar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+
+        bt_nav = findViewById(R.id.bt_nav);
+        getSupportFragmentManager().beginTransaction().replace(R.id.teste, homeFragment).commit();
+
+        bt_nav.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(MenuItem item) {
+                switch(item.getItemId()){
+                    case R.id.home:
+                        img_buscar.setVisibility(View.VISIBLE);
+                        busca_loc.setVisibility(View.VISIBLE);
+                        busca_sangue.setVisibility(View.VISIBLE);
+                        recyclerView.setVisibility(View.VISIBLE);
+                        getSupportFragmentManager().beginTransaction().replace(R.id.teste,homeFragment).commit();
+                        //Intent intent = new Intent(Principal.this, Principal.class);
+                        //startActivity(intent);
+                        return true;
+                    case R.id.chat:
+                        img_buscar.setVisibility(View.INVISIBLE);
+                        busca_loc.setVisibility(View.INVISIBLE);
+                        busca_sangue.setVisibility(View.INVISIBLE);
+                        recyclerView.setVisibility(View.INVISIBLE);
+                        //Intent intent2 = new Intent(Principal.this, Principal.class);
+                        //startActivity(intent2);
+                        return true;
+                    case R.id.perfil:
+                        img_buscar.setVisibility(View.INVISIBLE);
+                        busca_loc.setVisibility(View.INVISIBLE);
+                        busca_sangue.setVisibility(View.INVISIBLE);
+                        recyclerView.setVisibility(View.INVISIBLE);
+                        getSupportFragmentManager().beginTransaction().replace(R.id.teste,perfilFragment).commit();
+                        //Intent intent3 = new Intent(Principal.this, Perfil.class);
+                        //startActivity(intent3);
+                        return true;
+                }
+                return false;
+            }
+        });
+
         recyclerView = findViewById(R.id.recyclerView);
-        recyclerView.setHasFixedSize(true);
+        //recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         db = FirebaseFirestore.getInstance();
         userArrayList = new ArrayList<>();
-        myAdapter = new MyAdapter(Principal.this, userArrayList);
+        myAdapter = new MyAdapter(Principal.this, userArrayList, this);
 
         recyclerView.setAdapter(myAdapter);
 
+
+
         db = FirebaseFirestore.getInstance();
-        db.collection("Usuarios").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+        db.collection("Receptor").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                 ArrayList<DocumentSnapshot> list = (ArrayList<DocumentSnapshot>) queryDocumentSnapshots.getDocuments();
@@ -94,13 +162,17 @@ public class Principal extends AppCompatActivity {
                 {
                     User obj=d.toObject(User.class);
                     userArrayList.add(obj);
+
                 }
                 myAdapter.notifyDataSetChanged();
             }
         });
 
 
+
     }
+
+
 
 
     private void EventChangeListener() {
@@ -137,4 +209,12 @@ public class Principal extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onUserClick(int position) {
+        Log.d("teste", "onUserClick: clicked");
+        //userArrayList.get(position);
+        Intent intent = new Intent(Principal.this, Chat.class);
+        intent.putExtra("some_object", "algo");
+        startActivity(intent);
+    }
 }

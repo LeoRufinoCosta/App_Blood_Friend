@@ -36,10 +36,10 @@ import java.util.Map;
 
 
 
-public class Cadastrar extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class CadastroDoador extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     private EditText edit_user, edit_idade, edit_email, edit_senha, edit_confirmar_senha;
-    private Spinner edit_tipo_sanguineo, edit_sexo, edit_loc;
+    private Spinner edit_tipo_sanguineo, edit_sexo;
     private Button bt_cadastrado;
     private ProgressBar progressbar;
     private FirebaseAuth mAuth;
@@ -49,8 +49,9 @@ public class Cadastrar extends AppCompatActivity implements AdapterView.OnItemSe
 
 
 
+
     String[] msgs = {"Preencha todos os campos!", "As senhas não conferem!", "Cadastro realizado com sucesso.", "Selecione ou preencha todos os campos!.",
-                    "Deve ter entre 16 e 60 anos."};
+            "Deve ter entre 16 e 60 anos."};
 
 
     @Override
@@ -66,7 +67,7 @@ public class Cadastrar extends AppCompatActivity implements AdapterView.OnItemSe
 
         switch (item.getItemId()){
             case R.id.menu_voltar:
-                Intent intent = new Intent(Cadastrar.this, CadastroEtapa01.class);
+                Intent intent = new Intent(CadastroDoador.this, CadastroEtapa01.class);
                 startActivity(intent);
 
                 break;
@@ -79,7 +80,7 @@ public class Cadastrar extends AppCompatActivity implements AdapterView.OnItemSe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_cadastrar);
+        setContentView(R.layout.activity_cadastro_doador);
 
         //getSupportActionBar().hide();
         IniciarComponenetes();
@@ -96,11 +97,6 @@ public class Cadastrar extends AppCompatActivity implements AdapterView.OnItemSe
         spinner_sangue.setAdapter(adapter2);
         spinner_sangue.setOnItemSelectedListener(this);
 
-        Spinner spinner_loc = findViewById(R.id.edit_localizacao);
-        ArrayAdapter<CharSequence> adapter3 = ArrayAdapter.createFromResource(this, R.array.localizacao, android.R.layout.simple_spinner_item);
-        adapter3.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner_loc.setAdapter(adapter3);
-        spinner_loc.setOnItemSelectedListener(this);
 
         bt_cadastrado.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -135,10 +131,8 @@ public class Cadastrar extends AppCompatActivity implements AdapterView.OnItemSe
                         String gen = spinner_sexo.getSelectedItem().toString();
                         onItemSelected(spinner_sangue, v, 0, 0);
                         String sangue = spinner_sangue.getSelectedItem().toString();
-                        onItemSelected(spinner_loc, v, 0, 0);
-                        String loc = spinner_loc.getSelectedItem().toString();
                         //if(idade_int>60 && idade_int<16){
-                        if(gen.equals("GÊNERO") || sangue.equals("TIPO SANGUE") || loc.equals("LOCALIZAÇÃO")){
+                        if(gen.equals("GÊNERO") || sangue.equals("TIPO SANGUE")){
                             Snackbar snackbar = Snackbar.make(v, msgs[3], Snackbar.LENGTH_SHORT);
                             snackbar.setBackgroundTint(Color.WHITE);
                             snackbar.setTextColor(Color.BLACK);
@@ -155,7 +149,7 @@ public class Cadastrar extends AppCompatActivity implements AdapterView.OnItemSe
                                     @Override
                                     public void run() {
                                         FirebaseAuth.getInstance().signOut();
-                                        Intent intent = new Intent(Cadastrar.this, Inicial.class);
+                                        Intent intent = new Intent(CadastroDoador.this, Inicial.class);
                                         //intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                                         startActivity(intent);
                                     }
@@ -189,6 +183,7 @@ public class Cadastrar extends AppCompatActivity implements AdapterView.OnItemSe
             public void onComplete(@NonNull Task<AuthResult> task) {
 
                 if (task.isSuccessful()){
+                    //SalvarDadosUsuario("Usuarios");
                     SalvarDadosUsuario();
 
                 }else{
@@ -228,7 +223,6 @@ public class Cadastrar extends AppCompatActivity implements AdapterView.OnItemSe
         //String tipo_sanguineo = String.valueOf(edit_tipo_sanguineo.getSelectedItemPosition());
         String tipo_sanguineo = edit_tipo_sanguineo.getSelectedItem().toString();
         String tipo_sexo = edit_sexo.getSelectedItem().toString();
-        String localizacao = edit_loc.getSelectedItem().toString();
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -238,12 +232,28 @@ public class Cadastrar extends AppCompatActivity implements AdapterView.OnItemSe
         usuarios.put("Email", email);
         usuarios.put("TipoSanguineo", tipo_sanguineo);
         usuarios.put("Genero", tipo_sexo);
-        usuarios.put("Localizacao", localizacao);
 
         usuarioID = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-        DocumentReference documentReference = db.collection("Usuarios").document(usuarioID);
+
+        DocumentReference documentReference = db.collection("Usuario").document(usuarioID);
         documentReference.set(usuarios).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void unused) {
+                Log.d("db","Sucesso ao salvar os dados");
+
+            }
+        })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d("db_error", "Erro ao salvar os dados"+ e.toString());
+
+                    }
+                });
+
+        DocumentReference documentReference1 = db.collection("Doador").document(usuarioID);
+        documentReference1.set(usuarios).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
                 Log.d("db","Sucesso ao salvar os dados");
@@ -266,7 +276,6 @@ public class Cadastrar extends AppCompatActivity implements AdapterView.OnItemSe
         edit_email = findViewById(R.id.edit_email);
         edit_senha = findViewById(R.id.edit_senha);
         edit_sexo = findViewById(R.id.edit_sexo);
-        edit_loc = findViewById(R.id.edit_localizacao);
         edit_tipo_sanguineo = findViewById(R.id.edit_tipo_sangue);
         edit_confirmar_senha = findViewById(R.id.edit_confirmar_senha);
         bt_cadastrado = findViewById(R.id.bt_cadastrado);

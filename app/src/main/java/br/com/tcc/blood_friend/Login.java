@@ -33,7 +33,7 @@ public class Login extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
-        getMenuInflater().inflate(R.menu.menu, menu);
+        getMenuInflater().inflate(R.menu.voltar, menu);
 
         return super.onCreateOptionsMenu(menu);
     }
@@ -65,7 +65,7 @@ public class Login extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(Login.this, Cadastrar.class);
+                Intent intent = new Intent(Login.this, CadastroEtapa01.class);
                 startActivity(intent);
             }
         });

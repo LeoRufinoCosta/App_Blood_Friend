@@ -8,8 +8,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -17,6 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -28,15 +27,18 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.HashMap;
 import java.util.Map;
 
-
-
-public class Cadastrar extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class CadastroGoogle extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     private EditText edit_user, edit_idade, edit_email, edit_senha, edit_confirmar_senha;
     private Spinner edit_tipo_sanguineo, edit_sexo, edit_loc;
@@ -46,42 +48,14 @@ public class Cadastrar extends AppCompatActivity implements AdapterView.OnItemSe
     String usuarioID;
     int idade_int;
 
-
-
-
     String[] msgs = {"Preencha todos os campos!", "As senhas não conferem!", "Cadastro realizado com sucesso.", "Selecione ou preencha todos os campos!.",
-                    "Deve ter entre 16 e 60 anos."};
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-
-        getMenuInflater().inflate(R.menu.voltar, menu);
-
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-
-        switch (item.getItemId()){
-            case R.id.menu_voltar:
-                Intent intent = new Intent(Cadastrar.this, CadastroEtapa01.class);
-                startActivity(intent);
-
-                break;
-
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
+            "Deve ter entre 16 e 60 anos."};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_cadastrar);
+        setContentView(R.layout.activity_cadastro_google);
 
-        //getSupportActionBar().hide();
         IniciarComponenetes();
 
         Spinner spinner_sexo = findViewById(R.id.edit_sexo);
@@ -102,6 +76,8 @@ public class Cadastrar extends AppCompatActivity implements AdapterView.OnItemSe
         spinner_loc.setAdapter(adapter3);
         spinner_loc.setOnItemSelectedListener(this);
 
+
+
         bt_cadastrado.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -109,15 +85,11 @@ public class Cadastrar extends AppCompatActivity implements AdapterView.OnItemSe
 
                 String nome = edit_user.getText().toString();
                 String idade = edit_idade.getText().toString();
-                String email = edit_email.getText().toString();
-                String senha = edit_senha.getText().toString();
-                String confirmar_senha = edit_confirmar_senha.getText().toString();
                 if(idade.isEmpty()){
                     idade_int = 0;
                 }else{ idade_int = Integer.parseInt(idade, 10);}
 
-
-                if (nome.isEmpty()  || idade.isEmpty() || email.isEmpty() || senha.isEmpty() || confirmar_senha.isEmpty()){
+                if (nome.isEmpty()  || idade.isEmpty()){
                     Snackbar snackbar = Snackbar.make(v, msgs[0], Snackbar.LENGTH_SHORT);
                     snackbar.setBackgroundTint(Color.WHITE);
                     snackbar.setTextColor(Color.BLACK);
@@ -145,29 +117,19 @@ public class Cadastrar extends AppCompatActivity implements AdapterView.OnItemSe
                             snackbar.show();
                         }
                         else{
-                            if(senha.equals(confirmar_senha)){
+                            AtualizarUsuario();
 
-                                CadastrarUsuario(v);
-
-                                progressbar.setVisibility(View.VISIBLE);
-                                bt_cadastrado.setVisibility(View.INVISIBLE);
-                                new Handler().postDelayed(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        FirebaseAuth.getInstance().signOut();
-                                        Intent intent = new Intent(Cadastrar.this, Inicial.class);
-                                        //intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                                        startActivity(intent);
-                                    }
-                                },3000);
-
-                            }
-                            else{
-                                Snackbar snackbar = Snackbar.make(v, msgs[1], Snackbar.LENGTH_SHORT);
-                                snackbar.setBackgroundTint(Color.WHITE);
-                                snackbar.setTextColor(Color.BLACK);
-                                snackbar.show();
-                            }
+                            progressbar.setVisibility(View.VISIBLE);
+                            bt_cadastrado.setVisibility(View.INVISIBLE);
+                            new Handler().postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    //FirebaseAuth.getInstance().signOut();
+                                    Intent intent = new Intent(CadastroGoogle.this, Principal.class);
+                                    //intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                    startActivity(intent);
+                                }
+                            },3000);
                         }
                     }
                 }
@@ -179,84 +141,58 @@ public class Cadastrar extends AppCompatActivity implements AdapterView.OnItemSe
 
 
 
-    private void CadastrarUsuario(View v){
-
-        String email = edit_email.getText().toString();
-        String senha = edit_senha.getText().toString();
-
-        FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, senha).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-
-                if (task.isSuccessful()){
-                    SalvarDadosUsuario();
-
-                }else{
-                    String erro;
-                    try {
-                        throw task.getException();
-
-                    }catch (FirebaseAuthWeakPasswordException e){
-                        erro = "Digite uma senha com mínimo 6 caracteres.";
-
-                    }catch (FirebaseAuthUserCollisionException e){
-                        erro = "Este e-mail já foi cadastrado!";
-
-                    }catch (FirebaseAuthInvalidCredentialsException e){
-                        erro = "Digite um e-mail válido!";
-
-                    }catch(Exception e){
-                        erro = "Erro ao cadastrar usuário.";
-
-                    }
-                    Snackbar snackbar = Snackbar.make(v, erro, Snackbar.LENGTH_SHORT);
-                    snackbar.setBackgroundTint(Color.WHITE);
-                    snackbar.setTextColor(Color.BLACK);
-                    snackbar.show();
-                }
-            }
-        });
-    }
-
-
-
-    private void SalvarDadosUsuario(){
+    private void AtualizarUsuario(){
 
         String nome = edit_user.getText().toString();
         String idade = edit_idade.getText().toString();
-        String email = edit_email.getText().toString();
-        //String tipo_sanguineo = String.valueOf(edit_tipo_sanguineo.getSelectedItemPosition());
-        String tipo_sanguineo = edit_tipo_sanguineo.getSelectedItem().toString();
-        String tipo_sexo = edit_sexo.getSelectedItem().toString();
-        String localizacao = edit_loc.getSelectedItem().toString();
-
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-
-        Map<String,Object> usuarios = new HashMap<>();
-        usuarios.put("Nome", nome);
-        usuarios.put("Idade", idade);
-        usuarios.put("Email", email);
-        usuarios.put("TipoSanguineo", tipo_sanguineo);
-        usuarios.put("Genero", tipo_sexo);
-        usuarios.put("Localizacao", localizacao);
+        String sangue = edit_tipo_sanguineo.getSelectedItem().toString();
+        String sexo = edit_sexo.getSelectedItem().toString();
+        String loc = edit_loc.getSelectedItem().toString();
 
         usuarioID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        CollectionReference usuarioGoogle = db.collection("Usuario");
+        String emailUser = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+        String nulo = "";
 
-        DocumentReference documentReference = db.collection("Usuarios").document(usuarioID);
-        documentReference.set(usuarios).addOnSuccessListener(new OnSuccessListener<Void>() {
+        Map<String, Object> attUser = new HashMap<>();
+        attUser.put("Nome", nome);
+        attUser.put("Idade", idade);
+        attUser.put("TipoSanguineo", sangue);
+        attUser.put("Genero", sexo);
+        attUser.put("Localizacao", loc);
+
+        usuarioGoogle.whereEqualTo("Nome", nulo).whereEqualTo("Email", emailUser).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
-            public void onSuccess(Void unused) {
-                Log.d("db","Sucesso ao salvar os dados");
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful()){
+                    for (QueryDocumentSnapshot document : task.getResult()){
+                        if(document.getId().equals(usuarioID)){
+                            db.collection("Usuario").document(usuarioID).update(attUser).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
 
-            }
-        })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.d("db_error", "Erro ao salvar os dados"+ e.toString());
+                                    Toast.makeText(CadastroGoogle.this, "Sucesso", Toast.LENGTH_SHORT).show();
 
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Toast.makeText(CadastroGoogle.this, "Erro", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        }else{
+                            Intent intent = new Intent(CadastroGoogle.this, Principal.class);
+                            startActivity(intent);
+                        }
+
+
+                        Log.d("Consulta", document.getId() + "-->" + document.getData());
                     }
-                });
+
+                }
+            }
+        });
     }
 
 
@@ -275,11 +211,10 @@ public class Cadastrar extends AppCompatActivity implements AdapterView.OnItemSe
         mAuth = FirebaseAuth.getInstance();
     }
 
+
     @Override
-    public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
-        String text = adapterView.getItemAtPosition(0).toString();
-        String text2 = adapterView.getSelectedItem().toString();
-        //Toast.makeText(adapterView.getContext(), text , Toast.LENGTH_SHORT).show();
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
     }
 
     @Override

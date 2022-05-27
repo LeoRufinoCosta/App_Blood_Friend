@@ -21,20 +21,39 @@
         <entry key="..\:/Users/User/AndroidStudioProjects/app/src/main/res/layout/activity_main.xml" value="0.15625" />
         <entry key="..\:/Users/User/AndroidStudioProjects/app/src/main/res/mipmap-anydpi-v26/ic_google_round.xml" value="0.1875" />
         <entry key="..\:/Users/User/AndroidStudioProjects/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1875" />
-        <entry key="..\:/Users/rufin/Desktop/AndroidStudioProjects/app/src/main/res/layout/activity_cadastrar.xml" value="0.25" />
+        <entry key="..\:/Users/rufin/Desktop/AndroidStudioProjects/app/src/main/res/drawable/button.xml" value="0.255" />
+        <entry key="..\:/Users/rufin/Desktop/AndroidStudioProjects/app/src/main/res/drawable/button_2.xml" value="0.2705" />
+        <entry key="..\:/Users/rufin/Desktop/AndroidStudioProjects/app/src/main/res/drawable/edit_text_bg.xml" value="0.255" />
+        <entry key="..\:/Users/rufin/Desktop/AndroidStudioProjects/app/src/main/res/layout/activity_cadastrar.xml" value="0.22" />
+        <entry key="..\:/Users/rufin/Desktop/AndroidStudioProjects/app/src/main/res/layout/activity_cadastrar00.xml" value="0.288034188034188" />
+        <entry key="..\:/Users/rufin/Desktop/AndroidStudioProjects/app/src/main/res/layout/activity_cadastro_doador.xml" value="0.288034188034188" />
+        <entry key="..\:/Users/rufin/Desktop/AndroidStudioProjects/app/src/main/res/layout/activity_cadastro_etapa01.xml" value="0.288034188034188" />
+        <entry key="..\:/Users/rufin/Desktop/AndroidStudioProjects/app/src/main/res/layout/activity_cadastro_google.xml" value="0.288034188034188" />
+        <entry key="..\:/Users/rufin/Desktop/AndroidStudioProjects/app/src/main/res/layout/activity_cadastro_receptor.xml" value="0.288034188034188" />
+        <entry key="..\:/Users/rufin/Desktop/AndroidStudioProjects/app/src/main/res/layout/activity_cadsatro_google.xml" value="0.288034188034188" />
+        <entry key="..\:/Users/rufin/Desktop/AndroidStudioProjects/app/src/main/res/layout/activity_chat.xml" value="0.288034188034188" />
         <entry key="..\:/Users/rufin/Desktop/AndroidStudioProjects/app/src/main/res/layout/activity_dashboard.xml" value="0.33" />
+        <entry key="..\:/Users/rufin/Desktop/AndroidStudioProjects/app/src/main/res/layout/activity_edit_perfil.xml" value="0.5" />
         <entry key="..\:/Users/rufin/Desktop/AndroidStudioProjects/app/src/main/res/layout/activity_inicial.xml" value="0.33" />
         <entry key="..\:/Users/rufin/Desktop/AndroidStudioProjects/app/src/main/res/layout/activity_login.xml" value="0.35104166666666664" />
         <entry key="..\:/Users/rufin/Desktop/AndroidStudioProjects/app/src/main/res/layout/activity_perfil.xml" value="0.288034188034188" />
-        <entry key="..\:/Users/rufin/Desktop/AndroidStudioProjects/app/src/main/res/layout/activity_principal.xml" value="0.35104166666666664" />
+        <entry key="..\:/Users/rufin/Desktop/AndroidStudioProjects/app/src/main/res/layout/activity_principal.xml" value="0.3386114494518879" />
         <entry key="..\:/Users/rufin/Desktop/AndroidStudioProjects/app/src/main/res/layout/activity_teste.xml" value="0.25" />
+        <entry key="..\:/Users/rufin/Desktop/AndroidStudioProjects/app/src/main/res/layout/fragment_chat.xml" value="0.2047008547008547" />
         <entry key="..\:/Users/rufin/Desktop/AndroidStudioProjects/app/src/main/res/layout/fragment_dashboard.xml" value="0.25" />
         <entry key="..\:/Users/rufin/Desktop/AndroidStudioProjects/app/src/main/res/layout/fragment_home.xml" value="0.25" />
+        <entry key="..\:/Users/rufin/Desktop/AndroidStudioProjects/app/src/main/res/layout/fragment_perfil.xml" value="0.33" />
+        <entry key="..\:/Users/rufin/Desktop/AndroidStudioProjects/app/src/main/res/layout/fragment_teste.xml" value="0.288034188034188" />
         <entry key="..\:/Users/rufin/Desktop/AndroidStudioProjects/app/src/main/res/layout/header.xml" value="0.22192028985507245" />
         <entry key="..\:/Users/rufin/Desktop/AndroidStudioProjects/app/src/main/res/layout/item_user.xml" value="0.5" />
         <entry key="..\:/Users/rufin/Desktop/AndroidStudioProjects/app/src/main/res/layout/item_user2.xml" value="0.5" />
+        <entry key="..\:/Users/rufin/Desktop/AndroidStudioProjects/app/src/main/res/layout/msg_enviar.xml" value="0.22" />
+        <entry key="..\:/Users/rufin/Desktop/AndroidStudioProjects/app/src/main/res/layout/msg_receber.xml" value="0.75" />
         <entry key="..\:/Users/rufin/Desktop/AndroidStudioProjects/app/src/main/res/menu/main_menu.xml" value="0.29786324786324786" />
         <entry key="..\:/Users/rufin/Desktop/AndroidStudioProjects/app/src/main/res/menu/menu.xml" value="0.288034188034188" />
+        <entry key="..\:/Users/rufin/Desktop/AndroidStudioProjects/app/src/main/res/menu/nav_menu.xml" value="0.2047008547008547" />
+        <entry key="..\:/Users/rufin/Desktop/AndroidStudioProjects/app/src/main/res/menu/voltar.xml" value="0.288034188034188" />
+        <entry key="..\:/Users/rufin/Desktop/AndroidStudioProjects/app/src/main/res/mipmap-anydpi-v26/ic_app.xml" value="0.255" />
       </map>
     </option>
   </component>

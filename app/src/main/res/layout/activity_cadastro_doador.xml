@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/sangue"
-        tools:context=".Cadastrar">
+        tools:context=".CadastroDoador">
 
         <ImageView
             android:layout_width="300dp"
@@ -69,18 +69,6 @@
             app:layout_constraintTop_toTopOf="@+id/edit_idade" />
 
         <Spinner
-            android:id="@+id/edit_localizacao"
-            style="@style/spinner_full"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="8dp"
-            android:background="@drawable/spinner"
-            android:entries="@array/localizacao"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/edit_tipo_sangue" />
-
-        <Spinner
             android:id="@+id/edit_sexo"
             style="@style/spinner_full"
             android:layout_marginStart="8dp"
@@ -90,7 +78,7 @@
             android:entries="@array/generos"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/edit_localizacao" />
+            app:layout_constraintTop_toBottomOf="@id/edit_tipo_sangue" />
 
         <EditText
             android:id="@+id/edit_email"

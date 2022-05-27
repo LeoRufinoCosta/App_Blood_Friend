@@ -45,7 +45,7 @@
             android:gravity="center"
             android:text="@string/blood_friend"
             android:textColor="@color/white"
-            android:textSize="40dp"
+            android:textSize="40sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -54,10 +54,11 @@
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/bt_entrar"
             style="@style/Button"
-            android:layout_marginStart="80dp"
+            android:layout_marginStart="50dp"
             android:layout_marginTop="50dp"
-            android:layout_marginEnd="80dp"
+            android:layout_marginEnd="50dp"
             android:text="@string/entrar"
+            android:textSize="@dimen/browser_actions_context_menu_min_padding"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_app" />
@@ -65,39 +66,42 @@
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/bt_cadastrar"
             style="@style/Button2"
-            android:layout_marginStart="80dp"
+            android:layout_marginStart="50dp"
             android:layout_marginTop="15dp"
-            android:layout_marginEnd="80dp"
+            android:layout_marginEnd="50dp"
             android:text="@string/cadastrar"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            android:textSize="@dimen/browser_actions_context_menu_min_padding"
+            app:layout_constraintEnd_toEndOf="@+id/bt_entrar"
+            app:layout_constraintStart_toStartOf="@+id/bt_entrar"
             app:layout_constraintTop_toBottomOf="@+id/bt_entrar" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/bt_google"
             style="@style/Button"
-            android:layout_marginStart="80dp"
+            android:layout_marginStart="50dp"
             android:layout_marginTop="15dp"
-            android:layout_marginEnd="80dp"
+            android:layout_marginEnd="50dp"
             android:drawableLeft="@mipmap/ic_google"
-            android:text="@string/logar_google"
             android:padding="4dp"
+            android:text="@string/logar_google"
             android:textColor="@color/azul_google"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            android:textSize="@dimen/browser_actions_context_menu_min_padding"
+            app:layout_constraintEnd_toEndOf="@+id/bt_cadastrar"
+            app:layout_constraintStart_toStartOf="@+id/bt_cadastrar"
             app:layout_constraintTop_toBottomOf="@+id/bt_cadastrar" />
 
         <TextView
             android:id="@+id/text_ajuda"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="50dp"
+            android:gravity="center"
             android:text="@string/ajuda"
             android:textColor="@color/white"
-            android:textSize="20sp"
+            android:textSize="@dimen/browser_actions_context_menu_min_padding"
             android:textStyle="bold"
-            android:gravity="center"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/bt_google"
+            app:layout_constraintTop_toBottomOf="@+id/marca_dagua"
             tools:layout_editor_absoluteX="117dp" />
 
 
