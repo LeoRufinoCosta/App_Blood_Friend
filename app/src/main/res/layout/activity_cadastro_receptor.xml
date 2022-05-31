@@ -39,6 +39,7 @@
             android:hint="NOME E SOBRENOME"
             android:inputType="textCapWords|textPersonName"
             android:maxLength="30"
+            android:textColorHint="@color/cinza_escuro"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView2" />
@@ -53,6 +54,7 @@
             android:hint="IDADE"
             android:inputType="number"
             android:maxLength="2"
+            android:textColorHint="@color/cinza_escuro"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/edit_user" />
 
@@ -87,6 +89,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginEnd="8dp"
             android:hint="E-MAIL"
+            android:textColorHint="@color/cinza_escuro"
             android:inputType="textEmailAddress"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -101,6 +104,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginEnd="8dp"
             android:gravity="start"
+            android:textColorHint="@color/cinza_escuro"
             android:hint="EXPLIQUE O MOTIVO DA SUA NECESSIDADE..."
             android:inputType="textMultiLine"
             android:maxLength="800"
@@ -115,6 +119,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginEnd="8dp"
             android:hint="SENHA"
+            android:textColorHint="@color/cinza_escuro"
             android:inputType="numberPassword"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -127,6 +132,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginEnd="8dp"
             android:hint="CONFIRMAR SENHA"
+            android:textColorHint="@color/cinza_escuro"
             android:inputType="numberPassword"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

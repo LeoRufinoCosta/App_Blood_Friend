@@ -6,41 +6,33 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
-import android.nfc.Tag;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Button;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.Spinner;
-import android.widget.TextView;
 
-import com.firebase.ui.database.FirebaseRecyclerAdapter;
-import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
-import java.util.List;
 
 public class Principal extends AppCompatActivity implements MyAdapter.OnUserListener{
 
@@ -53,7 +45,7 @@ public class Principal extends AppCompatActivity implements MyAdapter.OnUserList
     HomeFragment homeFragment = new HomeFragment();
     PerfilFragment perfilFragment = new PerfilFragment();
 
-    private Spinner busca_loc, busca_sangue;
+    Spinner busca_sangueOFF;
     private ImageView img_buscar;
 
 
@@ -91,19 +83,10 @@ public class Principal extends AppCompatActivity implements MyAdapter.OnUserList
         //getSupportActionBar().hide();
         VerificarAuth();
 
-        img_buscar = findViewById(R.id.img_buscar);
-        busca_loc = findViewById(R.id.busca_loc);
-        busca_sangue = findViewById(R.id.busca_sangue);
-
-        img_buscar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
-
+        //img_buscar = findViewById(R.id.img_buscar);
+        busca_sangueOFF = findViewById(R.id.busca_sangue);
         bt_nav = findViewById(R.id.bt_nav);
+
         getSupportFragmentManager().beginTransaction().replace(R.id.teste, homeFragment).commit();
 
         bt_nav.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
@@ -111,26 +94,23 @@ public class Principal extends AppCompatActivity implements MyAdapter.OnUserList
             public boolean onNavigationItemSelected(MenuItem item) {
                 switch(item.getItemId()){
                     case R.id.home:
-                        img_buscar.setVisibility(View.VISIBLE);
-                        busca_loc.setVisibility(View.VISIBLE);
-                        busca_sangue.setVisibility(View.VISIBLE);
+                        //img_buscar.setVisibility(View.VISIBLE);
+                        busca_sangueOFF.setVisibility(View.VISIBLE);
                         recyclerView.setVisibility(View.VISIBLE);
                         getSupportFragmentManager().beginTransaction().replace(R.id.teste,homeFragment).commit();
                         //Intent intent = new Intent(Principal.this, Principal.class);
                         //startActivity(intent);
                         return true;
                     case R.id.chat:
-                        img_buscar.setVisibility(View.INVISIBLE);
-                        busca_loc.setVisibility(View.INVISIBLE);
-                        busca_sangue.setVisibility(View.INVISIBLE);
+                        //img_buscar.setVisibility(View.INVISIBLE);
+                        busca_sangueOFF.setVisibility(View.INVISIBLE);
                         recyclerView.setVisibility(View.INVISIBLE);
                         //Intent intent2 = new Intent(Principal.this, Principal.class);
                         //startActivity(intent2);
                         return true;
                     case R.id.perfil:
-                        img_buscar.setVisibility(View.INVISIBLE);
-                        busca_loc.setVisibility(View.INVISIBLE);
-                        busca_sangue.setVisibility(View.INVISIBLE);
+                        //img_buscar.setVisibility(View.INVISIBLE);
+                        busca_sangueOFF.setVisibility(View.INVISIBLE);
                         recyclerView.setVisibility(View.INVISIBLE);
                         getSupportFragmentManager().beginTransaction().replace(R.id.teste,perfilFragment).commit();
                         //Intent intent3 = new Intent(Principal.this, Perfil.class);
@@ -140,21 +120,86 @@ public class Principal extends AppCompatActivity implements MyAdapter.OnUserList
                 return false;
             }
         });
+        db = FirebaseFirestore.getInstance();
 
         recyclerView = findViewById(R.id.recyclerView);
-        //recyclerView.setHasFixedSize(true);
+        recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        db = FirebaseFirestore.getInstance();
-        userArrayList = new ArrayList<>();
-        myAdapter = new MyAdapter(Principal.this, userArrayList, this);
 
-        recyclerView.setAdapter(myAdapter);
+        //userArrayList = new ArrayList<>();
+        //telaUser();
+
+        Spinner spinner_sangue = findViewById(R.id.busca_sangue);
+        ArrayAdapter<CharSequence> adapter2 = ArrayAdapter.createFromResource(this, R.array.tipo_sanguineo, android.R.layout.simple_spinner_item);
+        adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner_sangue.setAdapter(adapter2);
+        spinner_sangue.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                String semSangue = adapterView.getItemAtPosition(0).toString();
+                String tipoSangue = adapterView.getSelectedItem().toString();
+                if(tipoSangue.equals(semSangue)){
+                    userArrayList = new ArrayList<>();
+                    telaUser();
+                }else{
+                    userArrayList = new ArrayList<>();
+                    //recyclerView.getRecycledViewPool().clear();
+                    filtroReceptores(tipoSangue);
+                }
+
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
 
 
 
-        db = FirebaseFirestore.getInstance();
-        db.collection("Receptor").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+    }
+
+
+    private void filtroReceptores(String tipoSangue){
+        String usuarioID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        CollectionReference receptorUser = db.collection("Receptor");
+
+
+        receptorUser.whereEqualTo("TipoSanguineo", tipoSangue).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful()){
+                    for (QueryDocumentSnapshot document: task.getResult()){
+                        document.getId();
+
+                        receptorUser.orderBy("Nome").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                            @Override
+                            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                                ArrayList<DocumentSnapshot> list = (ArrayList<DocumentSnapshot>) queryDocumentSnapshots.getDocuments();
+                                for(DocumentSnapshot d:list) {
+                                    if(document.getId().equals(d.getId())){
+                                        User obj=d.toObject(User.class);
+                                        Log.d("Testando", d.getId());
+                                        userArrayList.add(obj);
+                                    }
+                                }
+
+                                myAdapter = new MyAdapter(Principal.this, userArrayList, Principal.this);
+                                recyclerView.setAdapter(myAdapter);
+                                myAdapter.notifyDataSetChanged();
+
+                            }
+                        });
+                    }
+                }
+            }
+        });
+    }
+
+    private void telaUser(){
+        db.collection("Receptor").orderBy("Nome").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                 ArrayList<DocumentSnapshot> list = (ArrayList<DocumentSnapshot>) queryDocumentSnapshots.getDocuments();
@@ -164,16 +209,13 @@ public class Principal extends AppCompatActivity implements MyAdapter.OnUserList
                     userArrayList.add(obj);
 
                 }
+                myAdapter = new MyAdapter(Principal.this, userArrayList, Principal.this);
+                recyclerView.setAdapter(myAdapter);
                 myAdapter.notifyDataSetChanged();
             }
         });
 
-
-
     }
-
-
-
 
     private void EventChangeListener() {
 
@@ -212,9 +254,15 @@ public class Principal extends AppCompatActivity implements MyAdapter.OnUserList
     @Override
     public void onUserClick(int position) {
         Log.d("teste", "onUserClick: clicked");
-        //userArrayList.get(position);
+
+        User x = userArrayList.get(position);
+
         Intent intent = new Intent(Principal.this, Chat.class);
-        intent.putExtra("some_object", "algo");
+        intent.putExtra("ID", x.getID());
+        intent.putExtra("Nome", x.getNome());
         startActivity(intent);
     }
+
+
+
 }

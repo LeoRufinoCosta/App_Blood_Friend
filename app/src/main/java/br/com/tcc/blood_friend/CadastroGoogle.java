@@ -156,6 +156,7 @@ public class CadastroGoogle extends AppCompatActivity implements AdapterView.OnI
         String nulo = "";
 
         Map<String, Object> attUser = new HashMap<>();
+        attUser.put("ID", usuarioID);
         attUser.put("Nome", nome);
         attUser.put("Idade", idade);
         attUser.put("TipoSanguineo", sangue);

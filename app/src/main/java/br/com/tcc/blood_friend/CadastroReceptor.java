@@ -221,8 +221,10 @@ public class CadastroReceptor extends AppCompatActivity implements AdapterView.O
         String tipo_sexo = edit_sexo.getSelectedItem().toString();
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
+        usuarioID = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         Map<String,Object> usuarios = new HashMap<>();
+        usuarios.put("ID", usuarioID);
         usuarios.put("Nome", nome);
         usuarios.put("Idade", idade);
         usuarios.put("Email", email);
@@ -230,7 +232,7 @@ public class CadastroReceptor extends AppCompatActivity implements AdapterView.O
         usuarios.put("TipoSanguineo", tipo_sanguineo);
         usuarios.put("Genero", tipo_sexo);
 
-        usuarioID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
 
 
         DocumentReference documentReference = db.collection("Usuario").document(usuarioID);

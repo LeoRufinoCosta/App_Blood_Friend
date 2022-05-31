@@ -13,19 +13,19 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
+public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>{
 
     Context context;
     ArrayList<User> userArrayList;
-    private OnUserListener mOnUserListener;
+    ArrayList<User> userArrayListFull;
+    OnUserListener mOnUserListener;
 
     public MyAdapter(Context context, ArrayList<User> userArrayList, OnUserListener onUserListener) {
         this.context = context;
-        this.userArrayList = userArrayList;
+        this.userArrayListFull = userArrayList;
+        this.userArrayList = new ArrayList<>(userArrayListFull);
         this.mOnUserListener = onUserListener;
     }
-
-
 
     @NonNull
     @Override
@@ -40,9 +40,10 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
         User user = userArrayList.get(position);
 
-        holder.Nome.setText(userArrayList.get(position).getNome());
-        holder.TipoSanguineo.setText(userArrayList.get(position).getTipoSanguineo());
-        holder.Localizacao.setText(userArrayList.get(position).getLocalizacao());
+        //holder.ID.setText(user.getID());
+        holder.Nome.setText(user.getNome());
+        holder.TipoSanguineo.setText(user.getTipoSanguineo());
+        holder.Localizacao.setText(user.getLocalizacao());
 
     }
 
@@ -51,9 +52,12 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         return userArrayList.size();
     }
 
+
+
     public static class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         TextView Nome, Localizacao, TipoSanguineo;
+                //ID;
         OnUserListener onUserListener;
 
         public MyViewHolder(@NonNull View itemView, OnUserListener onUserListener) {
@@ -62,6 +66,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             Nome = itemView.findViewById(R.id.tvnome);
             Localizacao = itemView.findViewById(R.id.tvloc);
             TipoSanguineo = itemView.findViewById(R.id.tvsangue);
+            //ID = itemView.findViewById(R.id.ID);
             this.onUserListener = onUserListener;
 
             itemView.setOnClickListener(this);
@@ -69,6 +74,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
         @Override
         public void onClick(View view) {
+
             onUserListener.onUserClick(getAdapterPosition());
         }
     }

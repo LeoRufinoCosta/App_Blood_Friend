@@ -1,15 +1,19 @@
 package br.com.tcc.blood_friend;
 
 public class User {
-    String Nome, Localizacao, TipoSanguineo;
+    String ID, Nome, Localizacao, TipoSanguineo;
 
     public User(){}
 
-    public User(String nome, String localizacao, String tipoSanguineo) {
+    public User(String id, String nome, String localizacao, String tipoSanguineo) {
+        ID = id;
         Nome = nome;
         Localizacao = localizacao;
         TipoSanguineo = tipoSanguineo;
     }
+    public String getID(){ return ID; }
+
+    public void setID(String id) { ID = id; }
 
     public String getNome() {
         return Nome;

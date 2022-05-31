@@ -56,6 +56,7 @@
             android:inputType="textPersonName"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            android:textColorHint="@color/cinza_escuro"
             app:layout_constraintTop_toBottomOf="@id/logo" />
 
         <EditText
@@ -67,6 +68,7 @@
             android:drawableRight="@drawable/cadeado"
             android:hint="SENHA"
             android:inputType="numberPassword"
+            android:textColorHint="@color/cinza_escuro"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/edit_user" />

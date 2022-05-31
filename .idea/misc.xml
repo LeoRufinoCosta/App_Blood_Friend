@@ -21,6 +21,8 @@
         <entry key="..\:/Users/User/AndroidStudioProjects/app/src/main/res/layout/activity_main.xml" value="0.15625" />
         <entry key="..\:/Users/User/AndroidStudioProjects/app/src/main/res/mipmap-anydpi-v26/ic_google_round.xml" value="0.1875" />
         <entry key="..\:/Users/User/AndroidStudioProjects/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1875" />
+        <entry key="..\:/Users/rufin/Desktop/AndroidStudioProjects/app/src/main/res/drawable/bg_left.xml" value="0.271" />
+        <entry key="..\:/Users/rufin/Desktop/AndroidStudioProjects/app/src/main/res/drawable/bg_right.xml" value="0.271" />
         <entry key="..\:/Users/rufin/Desktop/AndroidStudioProjects/app/src/main/res/drawable/button.xml" value="0.255" />
         <entry key="..\:/Users/rufin/Desktop/AndroidStudioProjects/app/src/main/res/drawable/button_2.xml" value="0.2705" />
         <entry key="..\:/Users/rufin/Desktop/AndroidStudioProjects/app/src/main/res/drawable/edit_text_bg.xml" value="0.255" />
@@ -39,6 +41,8 @@
         <entry key="..\:/Users/rufin/Desktop/AndroidStudioProjects/app/src/main/res/layout/activity_perfil.xml" value="0.288034188034188" />
         <entry key="..\:/Users/rufin/Desktop/AndroidStudioProjects/app/src/main/res/layout/activity_principal.xml" value="0.3386114494518879" />
         <entry key="..\:/Users/rufin/Desktop/AndroidStudioProjects/app/src/main/res/layout/activity_teste.xml" value="0.25" />
+        <entry key="..\:/Users/rufin/Desktop/AndroidStudioProjects/app/src/main/res/layout/chat_left.xml" value="0.288034188034188" />
+        <entry key="..\:/Users/rufin/Desktop/AndroidStudioProjects/app/src/main/res/layout/chat_right.xml" value="0.288034188034188" />
         <entry key="..\:/Users/rufin/Desktop/AndroidStudioProjects/app/src/main/res/layout/fragment_chat.xml" value="0.2047008547008547" />
         <entry key="..\:/Users/rufin/Desktop/AndroidStudioProjects/app/src/main/res/layout/fragment_dashboard.xml" value="0.25" />
         <entry key="..\:/Users/rufin/Desktop/AndroidStudioProjects/app/src/main/res/layout/fragment_home.xml" value="0.25" />
