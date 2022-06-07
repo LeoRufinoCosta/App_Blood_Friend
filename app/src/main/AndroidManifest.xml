@@ -15,23 +15,20 @@
             android:name=".EditPerfil"
             android:exported="false" />
         <activity
-            android:name=".CadastroReceptor"
+            android:name=".Cadastro.CadastroReceptor"
             android:exported="false" />
         <activity
-            android:name=".CadastroDoador"
+            android:name=".Cadastro.CadastroDoador"
             android:exported="false" />
         <activity
-            android:name=".CadastroEtapa01"
+            android:name=".Cadastro.CadastroEtapa01"
             android:exported="false" />
         <activity
             android:name=".Chat"
             android:exported="false">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".Principal" />
         </activity>
         <activity
-            android:name=".CadastroGoogle"
+            android:name=".Cadastro.CadastroGoogle"
             android:exported="false" />
         <activity
             android:name=".Principal"
@@ -40,7 +37,7 @@
             android:name=".Perfil"
             android:exported="false" />
         <activity
-            android:name=".Cadastrar"
+            android:name=".Cadastro.Cadastrar"
             android:exported="false" />
         <activity
             android:name=".Login"

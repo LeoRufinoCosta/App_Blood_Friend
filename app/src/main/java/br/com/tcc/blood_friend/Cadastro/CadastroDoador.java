@@ -1,4 +1,4 @@
-package br.com.tcc.blood_friend;
+package br.com.tcc.blood_friend.Cadastro;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -34,19 +34,26 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.HashMap;
 import java.util.Map;
 
+import br.com.tcc.blood_friend.Inicial;
+import br.com.tcc.blood_friend.R;
 
 
-public class CadastroReceptor extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class CadastroDoador extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
-    private EditText edit_user, edit_idade, edit_email, edit_bio, edit_senha, edit_confirmar_senha;
+    private EditText edit_user, edit_idade, edit_email, edit_senha, edit_confirmar_senha;
     private Spinner edit_tipo_sanguineo, edit_sexo;
     private Button bt_cadastrado;
     private ProgressBar progressbar;
     private FirebaseAuth mAuth;
     String usuarioID;
     int idade_int;
-    String[] msgs = {"Preencha todos os campos!", "As senhas não conferem!", "Cadastro realizado com sucesso.",
-            "Selecione ou preencha todos os campos!.", "Deve ter entre 16 e 60 anos."};
+
+
+
+
+
+    String[] msgs = {"Preencha todos os campos!", "As senhas não conferem!", "Cadastro realizado com sucesso.", "Selecione ou preencha todos os campos!.",
+            "Deve ter entre 16 e 60 anos."};
 
 
     @Override
@@ -62,7 +69,7 @@ public class CadastroReceptor extends AppCompatActivity implements AdapterView.O
 
         switch (item.getItemId()){
             case R.id.menu_voltar:
-                Intent intent = new Intent(CadastroReceptor.this, CadastroEtapa01.class);
+                Intent intent = new Intent(CadastroDoador.this, CadastroEtapa01.class);
                 startActivity(intent);
 
                 break;
@@ -75,7 +82,7 @@ public class CadastroReceptor extends AppCompatActivity implements AdapterView.O
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_cadastro_receptor);
+        setContentView(R.layout.activity_cadastro_doador);
 
         //getSupportActionBar().hide();
         IniciarComponenetes();
@@ -144,7 +151,7 @@ public class CadastroReceptor extends AppCompatActivity implements AdapterView.O
                                     @Override
                                     public void run() {
                                         FirebaseAuth.getInstance().signOut();
-                                        Intent intent = new Intent(CadastroReceptor.this, Inicial.class);
+                                        Intent intent = new Intent(CadastroDoador.this, Inicial.class);
                                         //intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                                         startActivity(intent);
                                     }
@@ -215,7 +222,6 @@ public class CadastroReceptor extends AppCompatActivity implements AdapterView.O
         String nome = edit_user.getText().toString();
         String idade = edit_idade.getText().toString();
         String email = edit_email.getText().toString();
-        String bio = edit_bio.getText().toString();
         //String tipo_sanguineo = String.valueOf(edit_tipo_sanguineo.getSelectedItemPosition());
         String tipo_sanguineo = edit_tipo_sanguineo.getSelectedItem().toString();
         String tipo_sexo = edit_sexo.getSelectedItem().toString();
@@ -228,7 +234,6 @@ public class CadastroReceptor extends AppCompatActivity implements AdapterView.O
         usuarios.put("Nome", nome);
         usuarios.put("Idade", idade);
         usuarios.put("Email", email);
-        usuarios.put("Bio", bio);
         usuarios.put("TipoSanguineo", tipo_sanguineo);
         usuarios.put("Genero", tipo_sexo);
 
@@ -251,7 +256,7 @@ public class CadastroReceptor extends AppCompatActivity implements AdapterView.O
                     }
                 });
 
-        DocumentReference documentReference1 = db.collection("Receptor").document(usuarioID);
+        DocumentReference documentReference1 = db.collection("Doador").document(usuarioID);
         documentReference1.set(usuarios).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
@@ -275,11 +280,11 @@ public class CadastroReceptor extends AppCompatActivity implements AdapterView.O
         edit_email = findViewById(R.id.edit_email);
         edit_senha = findViewById(R.id.edit_senha);
         edit_sexo = findViewById(R.id.edit_sexo);
-        edit_bio = findViewById(R.id.edit_bio);
         edit_tipo_sanguineo = findViewById(R.id.edit_tipo_sangue);
         edit_confirmar_senha = findViewById(R.id.edit_confirmar_senha);
         bt_cadastrado = findViewById(R.id.bt_cadastrado);
         progressbar = findViewById(R.id.progressbar);
+
         mAuth = FirebaseAuth.getInstance();
     }
 

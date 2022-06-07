@@ -34,6 +34,9 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.HashMap;
 import java.util.Map;
 
+import br.com.tcc.blood_friend.Cadastro.CadastroEtapa01;
+import br.com.tcc.blood_friend.Cadastro.CadastroGoogle;
+
 public class Inicial extends AppCompatActivity {
 
     private Button bt_entrar, bt_cadastrar;
@@ -168,7 +171,7 @@ public class Inicial extends AppCompatActivity {
                                 for (QueryDocumentSnapshot document : task.getResult()){
                                     if(document.getId().equals(usuarioID)){
                                         Toast.makeText(getApplicationContext(), "Login com Google efetuado com sucesso!", Toast.LENGTH_SHORT).show();
-                                        Intent intent = new Intent(Inicial.this,CadastroGoogle.class);
+                                        Intent intent = new Intent(Inicial.this, CadastroGoogle.class);
                                         startActivity(intent);
                                     }else{
                                         Toast.makeText(getApplicationContext(), "Login com Google efetuado com sucesso!", Toast.LENGTH_SHORT).show();

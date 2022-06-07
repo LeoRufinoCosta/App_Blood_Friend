@@ -55,9 +55,35 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:text="Local de Doacao:"
+                android:textColor="@color/black"
+                android:textSize="1sp"
+                android:visibility="invisible"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvloc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="Gama"
+                android:visibility="invisible"
+                android:textColor="@color/sangue"
+                android:textSize="1sp" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:text="Tipo Sanguíneo:"
                 android:textColor="@color/black"
-                android:textSize="12sp"
+                android:textSize="15sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -67,25 +93,8 @@
                 android:layout_marginStart="8dp"
                 android:text="B+"
                 android:textColor="@color/sangue"
-                android:textSize="12sp" />
+                android:textSize="15sp" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:text="Local de Doacao:"
-                android:textColor="@color/black"
-                android:textSize="12sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/tvloc"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:text="Gama"
-                android:textColor="@color/sangue"
-                android:textSize="12sp" />
 
         </LinearLayout>
 

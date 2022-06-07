@@ -1,4 +1,4 @@
-package br.com.tcc.blood_friend;
+package br.com.tcc.blood_friend.Adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -13,6 +13,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
+
+import br.com.tcc.blood_friend.Model.ChatModel;
+import br.com.tcc.blood_friend.R;
 
 public class MessangerAdapter extends RecyclerView.Adapter<MessangerAdapter.MyViewHolder>{
 

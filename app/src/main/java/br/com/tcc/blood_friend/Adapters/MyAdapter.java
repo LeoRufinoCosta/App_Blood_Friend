@@ -1,17 +1,18 @@
-package br.com.tcc.blood_friend;
+package br.com.tcc.blood_friend.Adapters;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+
+import br.com.tcc.blood_friend.Model.User;
+import br.com.tcc.blood_friend.R;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>{
 

@@ -34,16 +34,24 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
+import br.com.tcc.blood_friend.Adapters.MyAdapter;
+import br.com.tcc.blood_friend.Fragments.ChatFragment;
+import br.com.tcc.blood_friend.Fragments.HomeFragment;
+import br.com.tcc.blood_friend.Fragments.PerfilFragment;
+import br.com.tcc.blood_friend.Model.User;
+
 public class Principal extends AppCompatActivity implements MyAdapter.OnUserListener{
 
     RecyclerView recyclerView;
     ArrayList<User> userArrayList;
+    ArrayList<User> listavazia;
     MyAdapter myAdapter;
     FirebaseFirestore db;
 
     BottomNavigationView bt_nav;
     HomeFragment homeFragment = new HomeFragment();
     PerfilFragment perfilFragment = new PerfilFragment();
+    ChatFragment chatFragment = new ChatFragment();
 
     Spinner busca_sangueOFF;
     private ImageView img_buscar;
@@ -105,6 +113,7 @@ public class Principal extends AppCompatActivity implements MyAdapter.OnUserList
                         //img_buscar.setVisibility(View.INVISIBLE);
                         busca_sangueOFF.setVisibility(View.INVISIBLE);
                         recyclerView.setVisibility(View.INVISIBLE);
+                        getSupportFragmentManager().beginTransaction().replace(R.id.teste,chatFragment).commit();
                         //Intent intent2 = new Intent(Principal.this, Principal.class);
                         //startActivity(intent2);
                         return true;
@@ -123,7 +132,7 @@ public class Principal extends AppCompatActivity implements MyAdapter.OnUserList
         db = FirebaseFirestore.getInstance();
 
         recyclerView = findViewById(R.id.recyclerView);
-        recyclerView.setHasFixedSize(true);
+        //recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
 
@@ -139,12 +148,13 @@ public class Principal extends AppCompatActivity implements MyAdapter.OnUserList
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 String semSangue = adapterView.getItemAtPosition(0).toString();
                 String tipoSangue = adapterView.getSelectedItem().toString();
+                recyclerView.clearOnChildAttachStateChangeListeners();
                 if(tipoSangue.equals(semSangue)){
+                    recyclerView.setVisibility(View.VISIBLE);
                     userArrayList = new ArrayList<>();
                     telaUser();
                 }else{
                     userArrayList = new ArrayList<>();
-                    //recyclerView.getRecycledViewPool().clear();
                     filtroReceptores(tipoSangue);
                 }
 
@@ -171,28 +181,32 @@ public class Principal extends AppCompatActivity implements MyAdapter.OnUserList
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if(task.isSuccessful()){
-                    for (QueryDocumentSnapshot document: task.getResult()){
-                        document.getId();
+                    if(!task.getResult().isEmpty()) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            Log.d("documento", document.getId());
+                            receptorUser.orderBy("Nome").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                                @Override
+                                public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                                    ArrayList<DocumentSnapshot> list = (ArrayList<DocumentSnapshot>) queryDocumentSnapshots.getDocuments();
+                                    for (DocumentSnapshot d : list) {
+                                        if (document.getId().equals(d.getId())) {
+                                            User obj = d.toObject(User.class);
 
-                        receptorUser.orderBy("Nome").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                            @Override
-                            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                                ArrayList<DocumentSnapshot> list = (ArrayList<DocumentSnapshot>) queryDocumentSnapshots.getDocuments();
-                                for(DocumentSnapshot d:list) {
-                                    if(document.getId().equals(d.getId())){
-                                        User obj=d.toObject(User.class);
-                                        Log.d("Testando", d.getId());
-                                        userArrayList.add(obj);
+                                            userArrayList.add(obj);
+                                        }
                                     }
+                                    myAdapter = new MyAdapter(Principal.this, userArrayList, Principal.this);
+                                    recyclerView.setAdapter(myAdapter);
+                                    myAdapter.notifyDataSetChanged();
+                                    recyclerView.setVisibility(View.VISIBLE);
                                 }
+                            });
+                        }
+                    }else{
 
-                                myAdapter = new MyAdapter(Principal.this, userArrayList, Principal.this);
-                                recyclerView.setAdapter(myAdapter);
-                                myAdapter.notifyDataSetChanged();
-
-                            }
-                        });
+                        recyclerView.setVisibility(View.INVISIBLE);
                     }
+
                 }
             }
         });

@@ -1,4 +1,4 @@
-package br.com.tcc.blood_friend;
+package br.com.tcc.blood_friend.Fragments;
 
 import android.os.Bundle;
 
@@ -12,6 +12,8 @@ import android.view.ViewGroup;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
+
+import br.com.tcc.blood_friend.R;
 
 public class HomeFragment extends Fragment {
 

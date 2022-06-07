@@ -1,4 +1,4 @@
-package br.com.tcc.blood_friend;
+package br.com.tcc.blood_friend.Cadastro;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,6 +9,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+
+import br.com.tcc.blood_friend.Inicial;
+import br.com.tcc.blood_friend.R;
 
 public class CadastroEtapa01 extends AppCompatActivity {
 

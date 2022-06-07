@@ -1,4 +1,4 @@
-package br.com.tcc.blood_friend;
+package br.com.tcc.blood_friend.Model;
 
 public class User {
     String ID, Nome, Localizacao, TipoSanguineo;

@@ -135,6 +135,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:text="teste"
+        android:visibility="invisible"
         android:textColor="@color/sangue"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="@+id/texto_loc"
@@ -165,6 +166,7 @@
         android:layout_marginTop="8dp"
         android:text="Localização:"
         android:textSize="22sp"
+        android:visibility="invisible"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/texto_sangue" />

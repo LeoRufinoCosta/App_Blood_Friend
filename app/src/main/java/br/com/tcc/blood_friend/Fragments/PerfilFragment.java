@@ -1,4 +1,4 @@
-package br.com.tcc.blood_friend;
+package br.com.tcc.blood_friend.Fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,6 +18,8 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+
+import br.com.tcc.blood_friend.R;
 
 
 public class PerfilFragment extends Fragment {

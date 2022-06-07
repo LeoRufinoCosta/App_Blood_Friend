@@ -1,19 +1,17 @@
 package br.com.tcc.blood_friend;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.ClipData;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,13 +22,13 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import br.com.tcc.blood_friend.Adapters.MessangerAdapter;
+import br.com.tcc.blood_friend.Model.ChatModel;
 
 public class Chat extends AppCompatActivity {
 
@@ -45,6 +43,29 @@ public class Chat extends AppCompatActivity {
     MessangerAdapter messangerAdapter;
     ArrayList<ChatModel> chatArrayList;
     RecyclerView recyclerView;
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        getMenuInflater().inflate(R.menu.voltar, menu);
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        switch (item.getItemId()){
+            case R.id.menu_voltar:
+                Intent intent = new Intent(Chat.this, Principal.class);
+                startActivity(intent);
+
+                break;
+
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 
 
     @Override
@@ -98,6 +119,21 @@ public class Chat extends AppCompatActivity {
         hashMap.put("message", msg);
 
         reference.child("Chat").push().setValue(hashMap);
+
+        DatabaseReference chatRef = FirebaseDatabase.getInstance().getReference("ChatUser").child(usuario.getUid()).child(Id);
+        chatRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(!dataSnapshot.exists()){
+                    chatRef.child("id").setValue(Id);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     private void LerMsg(String myid, String userid){

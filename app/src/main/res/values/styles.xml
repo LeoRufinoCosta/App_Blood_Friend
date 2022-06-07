@@ -15,6 +15,12 @@
         <item name="android:textColor">@color/cinza_escuro</item>
     </style>
 
+    <style name="edit_text_bg2">
+        <item name="android:background">@drawable/edit_text</item>
+        <item name="android:padding">15dp</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
     <style name="Button">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>

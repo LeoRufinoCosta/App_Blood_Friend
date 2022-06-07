@@ -1,4 +1,4 @@
-package br.com.tcc.blood_friend;
+package br.com.tcc.blood_friend.Cadastro;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -34,23 +34,21 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.HashMap;
 import java.util.Map;
 
+import br.com.tcc.blood_friend.Inicial;
+import br.com.tcc.blood_friend.R;
 
 
-public class Cadastrar extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class CadastroReceptor extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
-    private EditText edit_user, edit_idade, edit_email, edit_senha, edit_confirmar_senha;
-    private Spinner edit_tipo_sanguineo, edit_sexo, edit_loc;
+    private EditText edit_user, edit_idade, edit_email, edit_bio, edit_senha, edit_confirmar_senha;
+    private Spinner edit_tipo_sanguineo, edit_sexo;
     private Button bt_cadastrado;
     private ProgressBar progressbar;
     private FirebaseAuth mAuth;
     String usuarioID;
     int idade_int;
-
-
-
-
-    String[] msgs = {"Preencha todos os campos!", "As senhas não conferem!", "Cadastro realizado com sucesso.", "Selecione ou preencha todos os campos!.",
-                    "Deve ter entre 16 e 60 anos."};
+    String[] msgs = {"Preencha todos os campos!", "As senhas não conferem!", "Cadastro realizado com sucesso.",
+            "Selecione ou preencha todos os campos!.", "Deve ter entre 16 e 60 anos."};
 
 
     @Override
@@ -66,7 +64,7 @@ public class Cadastrar extends AppCompatActivity implements AdapterView.OnItemSe
 
         switch (item.getItemId()){
             case R.id.menu_voltar:
-                Intent intent = new Intent(Cadastrar.this, CadastroEtapa01.class);
+                Intent intent = new Intent(CadastroReceptor.this, CadastroEtapa01.class);
                 startActivity(intent);
 
                 break;
@@ -79,7 +77,7 @@ public class Cadastrar extends AppCompatActivity implements AdapterView.OnItemSe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_cadastrar);
+        setContentView(R.layout.activity_cadastro_receptor);
 
         //getSupportActionBar().hide();
         IniciarComponenetes();
@@ -96,11 +94,6 @@ public class Cadastrar extends AppCompatActivity implements AdapterView.OnItemSe
         spinner_sangue.setAdapter(adapter2);
         spinner_sangue.setOnItemSelectedListener(this);
 
-        Spinner spinner_loc = findViewById(R.id.edit_localizacao);
-        ArrayAdapter<CharSequence> adapter3 = ArrayAdapter.createFromResource(this, R.array.localizacao, android.R.layout.simple_spinner_item);
-        adapter3.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner_loc.setAdapter(adapter3);
-        spinner_loc.setOnItemSelectedListener(this);
 
         bt_cadastrado.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -135,10 +128,8 @@ public class Cadastrar extends AppCompatActivity implements AdapterView.OnItemSe
                         String gen = spinner_sexo.getSelectedItem().toString();
                         onItemSelected(spinner_sangue, v, 0, 0);
                         String sangue = spinner_sangue.getSelectedItem().toString();
-                        onItemSelected(spinner_loc, v, 0, 0);
-                        String loc = spinner_loc.getSelectedItem().toString();
                         //if(idade_int>60 && idade_int<16){
-                        if(gen.equals("GÊNERO") || sangue.equals("TIPO SANGUE") || loc.equals("LOCALIZAÇÃO")){
+                        if(gen.equals("GÊNERO") || sangue.equals("TIPO SANGUE")){
                             Snackbar snackbar = Snackbar.make(v, msgs[3], Snackbar.LENGTH_SHORT);
                             snackbar.setBackgroundTint(Color.WHITE);
                             snackbar.setTextColor(Color.BLACK);
@@ -155,7 +146,7 @@ public class Cadastrar extends AppCompatActivity implements AdapterView.OnItemSe
                                     @Override
                                     public void run() {
                                         FirebaseAuth.getInstance().signOut();
-                                        Intent intent = new Intent(Cadastrar.this, Inicial.class);
+                                        Intent intent = new Intent(CadastroReceptor.this, Inicial.class);
                                         //intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                                         startActivity(intent);
                                     }
@@ -189,6 +180,7 @@ public class Cadastrar extends AppCompatActivity implements AdapterView.OnItemSe
             public void onComplete(@NonNull Task<AuthResult> task) {
 
                 if (task.isSuccessful()){
+                    //SalvarDadosUsuario("Usuarios");
                     SalvarDadosUsuario();
 
                 }else{
@@ -225,25 +217,44 @@ public class Cadastrar extends AppCompatActivity implements AdapterView.OnItemSe
         String nome = edit_user.getText().toString();
         String idade = edit_idade.getText().toString();
         String email = edit_email.getText().toString();
+        String bio = edit_bio.getText().toString();
         //String tipo_sanguineo = String.valueOf(edit_tipo_sanguineo.getSelectedItemPosition());
         String tipo_sanguineo = edit_tipo_sanguineo.getSelectedItem().toString();
         String tipo_sexo = edit_sexo.getSelectedItem().toString();
-        String localizacao = edit_loc.getSelectedItem().toString();
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
+        usuarioID = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         Map<String,Object> usuarios = new HashMap<>();
+        usuarios.put("ID", usuarioID);
         usuarios.put("Nome", nome);
         usuarios.put("Idade", idade);
         usuarios.put("Email", email);
+        usuarios.put("Bio", bio);
         usuarios.put("TipoSanguineo", tipo_sanguineo);
         usuarios.put("Genero", tipo_sexo);
-        usuarios.put("Localizacao", localizacao);
 
-        usuarioID = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-        DocumentReference documentReference = db.collection("Usuarios").document(usuarioID);
+
+
+        DocumentReference documentReference = db.collection("Usuario").document(usuarioID);
         documentReference.set(usuarios).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void unused) {
+                Log.d("db","Sucesso ao salvar os dados");
+
+            }
+        })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d("db_error", "Erro ao salvar os dados"+ e.toString());
+
+                    }
+                });
+
+        DocumentReference documentReference1 = db.collection("Receptor").document(usuarioID);
+        documentReference1.set(usuarios).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
                 Log.d("db","Sucesso ao salvar os dados");
@@ -266,12 +277,11 @@ public class Cadastrar extends AppCompatActivity implements AdapterView.OnItemSe
         edit_email = findViewById(R.id.edit_email);
         edit_senha = findViewById(R.id.edit_senha);
         edit_sexo = findViewById(R.id.edit_sexo);
-        edit_loc = findViewById(R.id.edit_localizacao);
+        edit_bio = findViewById(R.id.edit_bio);
         edit_tipo_sanguineo = findViewById(R.id.edit_tipo_sangue);
         edit_confirmar_senha = findViewById(R.id.edit_confirmar_senha);
         bt_cadastrado = findViewById(R.id.bt_cadastrado);
         progressbar = findViewById(R.id.progressbar);
-
         mAuth = FirebaseAuth.getInstance();
     }
 
