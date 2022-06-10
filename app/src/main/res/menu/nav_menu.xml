@@ -3,8 +3,7 @@
 
     <item android:id="@+id/home"
         android:title="Home"
-        android:icon="@drawable/ic_home"
-        />
+        android:icon="@drawable/ic_home" />
 
     <item android:id="@+id/perfil"
         android:title="Perfil"
@@ -13,4 +12,8 @@
     <item android:id="@+id/chat"
         android:title="Chat"
         android:icon="@drawable/ic_chat"/>
+
+    <item android:id="@+id/config"
+        android:title="Config"
+        android:icon="@drawable/ic_config"/>
 </menu>

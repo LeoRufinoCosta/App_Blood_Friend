@@ -28,17 +28,18 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.tcc.blood_friend.Adapters.UserListAdapter;
 import br.com.tcc.blood_friend.Chat;
 import br.com.tcc.blood_friend.Model.ChatUserModel;
 import br.com.tcc.blood_friend.Model.User;
 import br.com.tcc.blood_friend.Adapters.MyAdapter;
 import br.com.tcc.blood_friend.R;
 
-public class ChatFragment extends Fragment implements MyAdapter.OnUserListener {
+public class ChatFragment extends Fragment implements UserListAdapter.OnUserListener {
 
     private RecyclerView recyclerView;
 
-    private MyAdapter myAdapter;
+    private UserListAdapter userListAdapter;
     ArrayList<User> userArrayList;
 
 
@@ -66,9 +67,12 @@ public class ChatFragment extends Fragment implements MyAdapter.OnUserListener {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 userList.clear();
+                Log.d("testet", dataSnapshot.toString());
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()){
                     ChatUserModel chatUserModel = snapshot.getValue(ChatUserModel.class);
                     userList.add(chatUserModel);
+                    Log.d("testet", userList.toString());
+
                 }
                 chatListUser();
             }
@@ -94,13 +98,14 @@ public class ChatFragment extends Fragment implements MyAdapter.OnUserListener {
                 for (DocumentSnapshot d:list){
                     User user = d.toObject(User.class);
                     for(ChatUserModel chatUserModel : userList){
+                        Log.d("testet", chatUserModel.getId());
                         if(user.getID().equals(chatUserModel.getId())){
                             userArrayList.add(user);
                         }
                     }
                 }
-                myAdapter = new MyAdapter(getContext(), userArrayList, ChatFragment.this);
-                recyclerView.setAdapter(myAdapter);
+                userListAdapter = new UserListAdapter(getContext(), userArrayList, ChatFragment.this);
+                recyclerView.setAdapter(userListAdapter);
             }
         });
     }

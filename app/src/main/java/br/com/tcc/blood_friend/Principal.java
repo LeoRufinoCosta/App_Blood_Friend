@@ -36,6 +36,7 @@ import java.util.ArrayList;
 
 import br.com.tcc.blood_friend.Adapters.MyAdapter;
 import br.com.tcc.blood_friend.Fragments.ChatFragment;
+import br.com.tcc.blood_friend.Fragments.ConfigFragment;
 import br.com.tcc.blood_friend.Fragments.HomeFragment;
 import br.com.tcc.blood_friend.Fragments.PerfilFragment;
 import br.com.tcc.blood_friend.Model.User;
@@ -52,6 +53,7 @@ public class Principal extends AppCompatActivity implements MyAdapter.OnUserList
     HomeFragment homeFragment = new HomeFragment();
     PerfilFragment perfilFragment = new PerfilFragment();
     ChatFragment chatFragment = new ChatFragment();
+    ConfigFragment configFragment = new ConfigFragment();
 
     Spinner busca_sangueOFF;
     private ImageView img_buscar;
@@ -105,6 +107,7 @@ public class Principal extends AppCompatActivity implements MyAdapter.OnUserList
                         //img_buscar.setVisibility(View.VISIBLE);
                         busca_sangueOFF.setVisibility(View.VISIBLE);
                         recyclerView.setVisibility(View.VISIBLE);
+                        getSupportActionBar().show();
                         getSupportFragmentManager().beginTransaction().replace(R.id.teste,homeFragment).commit();
                         //Intent intent = new Intent(Principal.this, Principal.class);
                         //startActivity(intent);
@@ -113,6 +116,7 @@ public class Principal extends AppCompatActivity implements MyAdapter.OnUserList
                         //img_buscar.setVisibility(View.INVISIBLE);
                         busca_sangueOFF.setVisibility(View.INVISIBLE);
                         recyclerView.setVisibility(View.INVISIBLE);
+                        getSupportActionBar().show();
                         getSupportFragmentManager().beginTransaction().replace(R.id.teste,chatFragment).commit();
                         //Intent intent2 = new Intent(Principal.this, Principal.class);
                         //startActivity(intent2);
@@ -121,10 +125,18 @@ public class Principal extends AppCompatActivity implements MyAdapter.OnUserList
                         //img_buscar.setVisibility(View.INVISIBLE);
                         busca_sangueOFF.setVisibility(View.INVISIBLE);
                         recyclerView.setVisibility(View.INVISIBLE);
+                        getSupportActionBar().show();
                         getSupportFragmentManager().beginTransaction().replace(R.id.teste,perfilFragment).commit();
                         //Intent intent3 = new Intent(Principal.this, Perfil.class);
                         //startActivity(intent3);
                         return true;
+                    case R.id.config:
+                        busca_sangueOFF.setVisibility(View.INVISIBLE);
+                        recyclerView.setVisibility(View.INVISIBLE);
+                        getSupportActionBar().hide();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.teste,configFragment).commit();
+                        return true;
+
                 }
                 return false;
             }
