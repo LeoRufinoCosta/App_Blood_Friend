@@ -11,4 +11,6 @@
     <color name="cinza">#DADADA</color>
     <color name="azul_google">#4385F5</color>
     <color name="cinza_escuro">#696969</color>
+    <color name="sangue_claro">#CD483F</color>
+    <color name="verde">#228B22</color>
 </resources>

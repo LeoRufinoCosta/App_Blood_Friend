@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -20,12 +21,14 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>{
     ArrayList<User> userArrayList;
     ArrayList<User> userArrayListFull;
     OnUserListener mOnUserListener;
+    boolean ischat;
 
-    public MyAdapter(Context context, ArrayList<User> userArrayList, OnUserListener onUserListener) {
+    public MyAdapter(Context context, ArrayList<User> userArrayList, OnUserListener onUserListener, boolean ischat) {
         this.context = context;
         this.userArrayListFull = userArrayList;
         this.userArrayList = new ArrayList<>(userArrayListFull);
         this.mOnUserListener = onUserListener;
+        this.ischat = ischat;
     }
 
     @NonNull
@@ -44,7 +47,19 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>{
         //holder.ID.setText(user.getID());
         holder.Nome.setText(user.getNome());
         holder.TipoSanguineo.setText(user.getTipoSanguineo());
-        holder.Localizacao.setText(user.getLocalizacao());
+
+        if(ischat){
+            if(user.getStatus().equals("online")){
+                holder.img_on.setVisibility(View.VISIBLE);
+                holder.img_off.setVisibility(View.GONE);
+            } else {
+                holder.img_on.setVisibility(View.GONE);
+                holder.img_off.setVisibility(View.VISIBLE);
+            }
+        } else{
+            holder.img_on.setVisibility(View.GONE);
+            holder.img_off.setVisibility(View.GONE);
+        }
 
     }
 
@@ -57,16 +72,18 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>{
 
     public static class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        TextView Nome, Localizacao, TipoSanguineo;
-                //ID;
+        TextView Nome, TipoSanguineo;
+        TextView img_on, img_off;
         OnUserListener onUserListener;
 
         public MyViewHolder(@NonNull View itemView, OnUserListener onUserListener) {
             super(itemView);
 
             Nome = itemView.findViewById(R.id.tvnome);
-            Localizacao = itemView.findViewById(R.id.tvloc);
             TipoSanguineo = itemView.findViewById(R.id.tvsangue);
+            img_on = itemView.findViewById(R.id.img_on);
+            img_off = itemView.findViewById(R.id.img_off);
+
             //ID = itemView.findViewById(R.id.ID);
             this.onUserListener = onUserListener;
 

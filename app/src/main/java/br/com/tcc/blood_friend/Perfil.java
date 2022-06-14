@@ -23,18 +23,20 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.auth.User;
 
+import br.com.tcc.blood_friend.Fragments.ConfigFragment;
+
 
 public class Perfil extends AppCompatActivity {
 
-    private TextView nomeUser, idade, tipo_sangue, loc, sexo, email;
-    private Button bt_sair;
+    private TextView nomeUser, idade, tipo_sangue, sexo, email;
+    private Button bt_edit;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     String usuarioID;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
-        getMenuInflater().inflate(R.menu.menu, menu);
+        getMenuInflater().inflate(R.menu.voltar, menu);
 
         return super.onCreateOptionsMenu(menu);
     }
@@ -43,11 +45,9 @@ public class Perfil extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
         switch (item.getItemId()){
-            case R.id.menu_sair:
-                FirebaseAuth.getInstance().signOut();
-                VerificarAuth();
-                //Intent intent = new Intent(Principal.this, Inicial.class);
-                //startActivity(intent);
+            case R.id.menu_voltar:
+                Intent intent = new Intent(Perfil.this, Principal.class);
+                startActivity(intent);
 
                 break;
 
@@ -68,11 +68,14 @@ public class Perfil extends AppCompatActivity {
         IniciarComponentes();
         VerificarAuth();
 
-        bt_sair.setOnClickListener(new View.OnClickListener() {
+        bt_edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FirebaseAuth.getInstance().signOut();
-                VerificarAuth();
+                Intent intent = new Intent(Perfil.this, EditPerfil.class);
+                //intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                //FirebaseAuth.getInstance().signOut();
+                //VerificarAuth();
             }
         });
 
@@ -94,7 +97,7 @@ public class Perfil extends AppCompatActivity {
         String emailUser = FirebaseAuth.getInstance().getCurrentUser().getEmail();
         usuarioID = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-        DocumentReference documentReference = db.collection("Usuarios").document(usuarioID);
+        DocumentReference documentReference = db.collection("Usuario").document(usuarioID);
         documentReference.addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException error) {
@@ -103,7 +106,6 @@ public class Perfil extends AppCompatActivity {
                     email.setText(emailUser);
                     idade.setText(documentSnapshot.getString("Idade"));
                     sexo.setText(documentSnapshot.getString("Genero"));
-                    loc.setText(documentSnapshot.getString("Localizacao"));
                     tipo_sangue.setText(documentSnapshot.getString("TipoSanguineo"));
 
 
@@ -120,9 +122,8 @@ public class Perfil extends AppCompatActivity {
         idade = findViewById(R.id.text_idade);
         email = findViewById(R.id.text_email);
         sexo = findViewById(R.id.text_sexo);
-        loc = findViewById(R.id.text_loc);
         tipo_sangue = findViewById(R.id.text_sangue);
-        bt_sair = findViewById(R.id.bt_sair);
+        bt_edit = findViewById(R.id.bt_edit);
 
     }
 }

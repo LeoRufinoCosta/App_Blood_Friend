@@ -22,10 +22,12 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 import br.com.tcc.blood_friend.Adapters.MessangerAdapter;
 import br.com.tcc.blood_friend.Model.ChatModel;
@@ -161,7 +163,27 @@ public class Chat extends AppCompatActivity {
 
             }
         });
+    }
 
+    private void Status(String status){
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
 
+        Map<String,Object> usuarios = new HashMap<>();
+        usuarios.put("Status", status);
+
+        DocumentReference documentReference = db.collection("Usuario").document(usuario.getUid());
+        documentReference.update(usuarios);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Status("online");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Status("offline");
     }
 }

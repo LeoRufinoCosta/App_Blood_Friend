@@ -12,11 +12,11 @@
         android:id="@+id/texto_nome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="20dp"
-        android:text="Nome"
-        android:textStyle="bold"
+        android:text="Nome:"
         android:textSize="22sp"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -24,148 +24,127 @@
         android:id="@+id/text_nome_user"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginStart="8dp"
         android:text=""
         android:textColor="@color/sangue"
         android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/texto_nome"
+        app:layout_constraintBottom_toBottomOf="@+id/texto_nome"
+        app:layout_constraintStart_toEndOf="@+id/texto_nome"
+        app:layout_constraintTop_toTopOf="@+id/texto_nome"
         tools:ignore="MissingConstraints" />
 
     <TextView
         android:id="@+id/texto_idade"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="Idade"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Idade:"
+        android:textSize="22sp"
         android:textStyle="bold"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_nome_user" />
+        app:layout_constraintTop_toBottomOf="@+id/texto_nome" />
 
     <TextView
         android:id="@+id/text_idade"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginStart="8dp"
         android:text=""
         android:textColor="@color/sangue"
         android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/texto_idade" />
+        app:layout_constraintBottom_toBottomOf="@+id/texto_idade"
+        app:layout_constraintStart_toEndOf="@+id/texto_idade"
+        app:layout_constraintTop_toTopOf="@+id/texto_idade" />
 
     <TextView
         android:id="@+id/texto_sexo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="Sexo"
-        android:textStyle="bold"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Sexo:"
         android:textSize="22sp"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_idade" />
+        app:layout_constraintTop_toBottomOf="@+id/texto_idade" />
 
     <TextView
         android:id="@+id/text_sexo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginStart="8dp"
         android:text=""
         android:textColor="@color/sangue"
         android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/texto_sexo" />
+        app:layout_constraintBottom_toBottomOf="@+id/texto_sexo"
+        app:layout_constraintStart_toEndOf="@+id/texto_sexo"
+        app:layout_constraintTop_toTopOf="@+id/texto_sexo" />
 
     <TextView
         android:id="@+id/texto_email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="E-mail"
-        android:textStyle="bold"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="E-mail:"
         android:textSize="22sp"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_sexo" />
+        app:layout_constraintTop_toBottomOf="@+id/texto_sexo" />
 
     <TextView
         android:id="@+id/text_email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginStart="8dp"
         android:text=""
         android:textColor="@color/sangue"
         android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/texto_email" />
+        app:layout_constraintBottom_toBottomOf="@+id/texto_email"
+        app:layout_constraintStart_toEndOf="@+id/texto_email"
+        app:layout_constraintTop_toTopOf="@+id/texto_email" />
 
     <TextView
         android:id="@+id/texto_sangue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="Tipo Sanguíneo"
-        android:textStyle="bold"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Tipo Sanguíneo:"
         android:textSize="22sp"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_email" />
+        app:layout_constraintTop_toBottomOf="@+id/texto_email" />
 
     <TextView
         android:id="@+id/text_sangue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginStart="8dp"
         android:text=""
         android:textColor="@color/sangue"
         android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/texto_sangue" />
+        app:layout_constraintBottom_toBottomOf="@+id/texto_sangue"
+        app:layout_constraintStart_toEndOf="@+id/texto_sangue"
+        app:layout_constraintTop_toTopOf="@+id/texto_sangue" />
 
-    <TextView
-        android:id="@+id/text_loc"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text=""
-        android:textColor="@color/sangue"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/texto_loc" />
 
-    <TextView
-        android:id="@+id/texto_loc"
-        android:layout_width="wrap_content"
+    <Button
+        android:id="@+id/bt_edit"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="Localização"
-        android:textSize="22sp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="8dp"
+        android:backgroundTint="@color/sangue"
+        android:padding="13dp"
+        android:text="@string/editar_perfil"
+        android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_sangue" />
-
-    <Button
-        android:id="@+id/bt_sair"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:backgroundTint="@color/sangue"
-        android:padding="20dp"
-        android:text="SAIR"
-        android:textSize="24dp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

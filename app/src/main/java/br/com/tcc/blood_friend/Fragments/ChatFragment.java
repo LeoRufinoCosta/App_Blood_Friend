@@ -104,7 +104,7 @@ public class ChatFragment extends Fragment implements UserListAdapter.OnUserList
                         }
                     }
                 }
-                userListAdapter = new UserListAdapter(getContext(), userArrayList, ChatFragment.this);
+                userListAdapter = new UserListAdapter(getContext(), userArrayList, ChatFragment.this, true);
                 recyclerView.setAdapter(userListAdapter);
             }
         });

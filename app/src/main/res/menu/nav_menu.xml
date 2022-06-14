@@ -6,8 +6,8 @@
         android:icon="@drawable/ic_home" />
 
     <item android:id="@+id/perfil"
-        android:title="Perfil"
-        android:icon="@drawable/ic_perfil"/>
+        android:title="Hemocentros"
+        android:icon="@drawable/ic_hospital"/>
 
     <item android:id="@+id/chat"
         android:title="Chat"

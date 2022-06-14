@@ -21,12 +21,14 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.MyView
     ArrayList<User> userArrayList;
     ArrayList<User> userArrayListFull;
     OnUserListener mOnUserListener;
+    boolean ischat;
 
-    public UserListAdapter(Context context, ArrayList<User> userArrayList, OnUserListener onUserListener) {
+    public UserListAdapter(Context context, ArrayList<User> userArrayList, OnUserListener onUserListener, boolean ischat) {
         this.context = context;
         this.userArrayListFull = userArrayList;
         this.userArrayList = new ArrayList<>(userArrayListFull);
         this.mOnUserListener = onUserListener;
+        this.ischat = ischat;
     }
 
     @NonNull
@@ -43,6 +45,19 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.MyView
         User user = userArrayList.get(position);
 
         holder.Nome.setText(user.getNome());
+
+        if(ischat){
+            if(user.getStatus().equals("online")){
+                holder.img_on.setVisibility(View.VISIBLE);
+                holder.img_off.setVisibility(View.GONE);
+            } else {
+                holder.img_on.setVisibility(View.GONE);
+                holder.img_off.setVisibility(View.VISIBLE);
+            }
+        } else{
+            holder.img_on.setVisibility(View.GONE);
+            holder.img_off.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -56,11 +71,14 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.MyView
 
         TextView Nome;
         OnUserListener onUserListener;
+        TextView img_on, img_off;
 
         public MyViewHolder(@NonNull View itemView, OnUserListener onUserListener) {
             super(itemView);
 
             Nome = itemView.findViewById(R.id.tvnome);
+            img_on = itemView.findViewById(R.id.img_on);
+            img_off = itemView.findViewById(R.id.img_off);
             this.onUserListener = onUserListener;
 
             itemView.setOnClickListener(this);

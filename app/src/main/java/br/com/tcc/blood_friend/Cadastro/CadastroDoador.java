@@ -122,7 +122,7 @@ public class CadastroDoador extends AppCompatActivity implements AdapterView.OnI
                     snackbar.show();
                 }
                 else{
-                    if(idade_int<16 || idade_int>69){
+                    if(idade_int != 0){
                         Snackbar snackbar = Snackbar.make(v, msgs[4], Snackbar.LENGTH_SHORT);
                         snackbar.setBackgroundTint(Color.WHITE);
                         snackbar.setTextColor(Color.BLACK);

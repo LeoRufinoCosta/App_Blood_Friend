@@ -6,7 +6,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -18,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -25,6 +28,7 @@ import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentChange;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -33,6 +37,8 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import br.com.tcc.blood_friend.Adapters.MyAdapter;
 import br.com.tcc.blood_friend.Fragments.ChatFragment;
@@ -44,20 +50,21 @@ import br.com.tcc.blood_friend.Model.User;
 public class Principal extends AppCompatActivity implements MyAdapter.OnUserListener{
 
     RecyclerView recyclerView;
+    Spinner busca_sangueOFF;
     ArrayList<User> userArrayList;
-    ArrayList<User> listavazia;
     MyAdapter myAdapter;
     FirebaseFirestore db;
+    String usuarioID;
+    String IDarmazenado;
+
+    SharedPreferences save;
+    SharedPreferences.Editor editor;
 
     BottomNavigationView bt_nav;
     HomeFragment homeFragment = new HomeFragment();
     PerfilFragment perfilFragment = new PerfilFragment();
     ChatFragment chatFragment = new ChatFragment();
     ConfigFragment configFragment = new ConfigFragment();
-
-    Spinner busca_sangueOFF;
-    private ImageView img_buscar;
-
 
 
     @Override
@@ -73,10 +80,11 @@ public class Principal extends AppCompatActivity implements MyAdapter.OnUserList
 
         switch (item.getItemId()){
             case R.id.menu_sair:
+                //Status("offline", FirebaseAuth.getInstance().getCurrentUser().getUid());
                 FirebaseAuth.getInstance().signOut();
                 VerificarAuth();
-                Intent intent = new Intent(Principal.this, Inicial.class);
-                startActivity(intent);
+                //Intent intent = new Intent(Principal.this, Inicial.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                //startActivity(intent);
 
                 break;
 
@@ -93,7 +101,9 @@ public class Principal extends AppCompatActivity implements MyAdapter.OnUserList
         //getSupportActionBar().hide();
         VerificarAuth();
 
-        //img_buscar = findViewById(R.id.img_buscar);
+        save = getSharedPreferences("save", Context.MODE_PRIVATE);
+        IDarmazenado = save.getString("valor",FirebaseAuth.getInstance().getCurrentUser().getUid());
+
         busca_sangueOFF = findViewById(R.id.busca_sangue);
         bt_nav = findViewById(R.id.bt_nav);
 
@@ -146,10 +156,6 @@ public class Principal extends AppCompatActivity implements MyAdapter.OnUserList
         recyclerView = findViewById(R.id.recyclerView);
         //recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-
-        //userArrayList = new ArrayList<>();
-        //telaUser();
 
         Spinner spinner_sangue = findViewById(R.id.busca_sangue);
         ArrayAdapter<CharSequence> adapter2 = ArrayAdapter.createFromResource(this, R.array.tipo_sanguineo, android.R.layout.simple_spinner_item);
@@ -207,7 +213,7 @@ public class Principal extends AppCompatActivity implements MyAdapter.OnUserList
                                             userArrayList.add(obj);
                                         }
                                     }
-                                    myAdapter = new MyAdapter(Principal.this, userArrayList, Principal.this);
+                                    myAdapter = new MyAdapter(Principal.this, userArrayList, Principal.this, true);
                                     recyclerView.setAdapter(myAdapter);
                                     myAdapter.notifyDataSetChanged();
                                     recyclerView.setVisibility(View.VISIBLE);
@@ -235,7 +241,7 @@ public class Principal extends AppCompatActivity implements MyAdapter.OnUserList
                     userArrayList.add(obj);
 
                 }
-                myAdapter = new MyAdapter(Principal.this, userArrayList, Principal.this);
+                myAdapter = new MyAdapter(Principal.this, userArrayList, Principal.this, true);
                 recyclerView.setAdapter(myAdapter);
                 myAdapter.notifyDataSetChanged();
             }
@@ -269,10 +275,9 @@ public class Principal extends AppCompatActivity implements MyAdapter.OnUserList
 
     private void VerificarAuth(){
         if (FirebaseAuth.getInstance().getUid() == null){
-            Intent intent = new Intent(Principal.this, Inicial.class);
+            Intent intent = new Intent(Principal.this, Inicial.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             //intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
-            finish();
         }
 
     }
@@ -289,6 +294,42 @@ public class Principal extends AppCompatActivity implements MyAdapter.OnUserList
         startActivity(intent);
     }
 
+    private void Status(String status, String IDusuario){
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
 
+        Map<String,Object> usuarios = new HashMap<>();
+        usuarios.put("Status", status);
 
+        DocumentReference documentReference = db.collection("Usuario").document(IDusuario);
+        documentReference.update(usuarios);
+
+        DocumentReference documentReference2 = db.collection("Doador").document(IDusuario);
+        DocumentReference documentReference3 = db.collection("Receptor").document(IDusuario);
+
+        documentReference2.update(usuarios);
+        documentReference3.update(usuarios);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        usuarioID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        Status("online", usuarioID);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+    }
+
+    @Override
+    protected void onStop() {
+        editor = save.edit();
+        editor.putString("valor", IDarmazenado);
+        editor.commit();
+        Status("offline", IDarmazenado);
+        Log.d("idarmazenado", IDarmazenado);
+        super.onStop();
+    }
 }
