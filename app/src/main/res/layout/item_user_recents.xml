@@ -78,6 +78,31 @@
 
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mensagem: "
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:maxLines="1"/>
+
+            <TextView
+                android:id="@+id/ultima_msg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textColor="@color/cinza_escuro"
+                android:textSize="16sp"
+                android:maxLines="1"/>
+
+        </LinearLayout>
+
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>

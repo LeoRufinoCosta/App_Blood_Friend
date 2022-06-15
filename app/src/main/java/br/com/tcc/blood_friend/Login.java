@@ -25,7 +25,7 @@ import br.com.tcc.blood_friend.Cadastro.CadastroEtapa01;
 
 public class Login extends AppCompatActivity {
 
-    private TextView text_tela_cadastro;
+    private TextView text_tela_cadastro, esqueciSenha;
     private EditText edit_user, edit_senha;
     private Button bt_entrar;
     private ProgressBar progressbar;
@@ -61,6 +61,14 @@ public class Login extends AppCompatActivity {
 
         //getSupportActionBar().hide();
         IniciarComponentes();
+
+        esqueciSenha.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Login.this, EsqueciSenha.class);
+                startActivity(intent);
+            }
+        });
 
         text_tela_cadastro.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -153,6 +161,7 @@ public class Login extends AppCompatActivity {
         edit_senha = findViewById(R.id.edit_senha);
         bt_entrar = findViewById(R.id.bt_entrar);
         progressbar = findViewById(R.id.progressbar);
+        esqueciSenha = findViewById(R.id.esqueciSenha);
 
     }
 }

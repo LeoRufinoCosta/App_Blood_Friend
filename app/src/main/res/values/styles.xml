@@ -21,6 +21,12 @@
         <item name="android:textColor">@color/black</item>
     </style>
 
+    <style name="edit_img">
+        <item name="android:background">@drawable/edit_text</item>
+        <item name="android:padding">8dp</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
     <style name="Button">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>

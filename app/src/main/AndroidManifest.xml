@@ -12,6 +12,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Blood_Friend">
         <activity
+            android:name=".EsqueciSenha"
+            android:exported="false"
+            android:parentActivityName=".Login"/>
+        <activity
             android:name=".EditPerfil"
             android:exported="false" />
         <activity
@@ -25,8 +29,7 @@
             android:exported="false" />
         <activity
             android:name=".Chat"
-            android:exported="false">
-        </activity>
+            android:exported="false"></activity>
         <activity
             android:name=".Cadastro.CadastroGoogle"
             android:exported="false" />

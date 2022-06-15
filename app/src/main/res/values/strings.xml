@@ -2,7 +2,7 @@
     <string name="app_name">Blood Friend</string>
     <string name="entrar">ENTRAR</string>
     <string name="cadastrar">CADASTRAR-SE</string>
-    <string name="cadastro">Cadastre-se aqui</string>
+    <string name="cadastro">CADASTRE-SE AQUI</string>
     <string name="logar_google">SIGN IN</string>
     <string name="blood_friend">BLOOD FRIEND</string>
     <string name="ajuda">Precisa de ajuda? Contate-nos</string>
@@ -46,4 +46,5 @@
     <string name="editar_perfil">EDITAR PERFIL</string>
     <string name="doador">DOADOR</string>
     <string name="receptor">RECEPTOR</string>
+    <string name="esquecersenha">Esqueci minha senha</string>
 </resources>
