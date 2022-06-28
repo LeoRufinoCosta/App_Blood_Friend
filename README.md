@@ -4,7 +4,7 @@
 <h1 align="center">Blood Friend</h1>
 <br>
 
-### O aplicativo móvel Blood Friend é escrito em JAVA com Android Studio com integrações com o Firebase.
+### O aplicativo móvel Blood Friend é escrito em JAVA no ambiente do Android Studio com integrações do Firebase.
 
 ![tela inicial menor](https://user-images.githubusercontent.com/42048921/176233350-da10d57f-d4b7-43f8-8f93-7fd802d70ba7.png) ![tela login menor](https://user-images.githubusercontent.com/42048921/176233377-5bd183fb-3abc-4286-ae99-5f95b6a726de.png)
 
